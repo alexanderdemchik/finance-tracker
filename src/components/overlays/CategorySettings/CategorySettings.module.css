@@ -1,0 +1,53 @@
+.list-wrapper {
+  flex-grow: 1;
+  overflow-x: hidden;
+}
+
+.list-wrapper li {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  padding: var(--mantine-spacing-xs);
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+  background: var(--mantine-color-body);
+  border-top: 1px solid transparent;
+}
+
+.list-wrapper ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: 24px;
+  touch-action: 'none'
+}
+
+.hide-btn {
+  background-color: var(--mantine-color-red-8);
+  color: var(--mantine-color-body);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(2);
+
+  & svg {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+}
+
+.hide-btn.hidden {
+  background-color: var(--mantine-color-green-3);
+}
+
+.add-btn {
+  overflow: hidden;
+
+  & button {
+    border-radius: 0;
+  }
+}

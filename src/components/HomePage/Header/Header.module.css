@@ -1,0 +1,8 @@
+.month {
+  display: flex;
+  align-items: flex-end;
+
+  & svg {
+    margin-bottom: 1px;
+  }
+}

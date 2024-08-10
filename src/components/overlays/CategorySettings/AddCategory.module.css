@@ -1,0 +1,14 @@
+.icon-wrapper {
+  background: var(--mantine-color-dark-6);
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mantine-spacing-xs);
+}
+
+.icon-wrapper.selected {
+  background-color: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+}

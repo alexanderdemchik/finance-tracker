@@ -1,0 +1,76 @@
+$add-btn-size: 40px;
+$add-btn-wrapper-size: 48px;
+
+:root {
+  --bottom-nav-bar-height: 45px;
+}
+
+.wrapper {
+  display: flex;
+  background-color: var(--mantine-color-dark-6);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 2px solid var(--mantine-color-dark-5);
+}
+
+.wrapper button {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.wrapper > .actions-wrapper {
+  flex-grow: 1;
+}
+
+.nav-item {
+  cursor: pointer;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.add-btn-wrapper {
+  width: $add-btn-wrapper-size;
+  justify-content: center;
+  display: flex;
+}
+
+.add-btn-wrapper svg {
+  width: $add-btn-size;
+  height: $add-btn-size;
+  position: absolute;
+  top: -8px;
+  fill: var(--mantine-primary-color-filled);
+  transition: all .4s;
+
+  &:active {
+    fill: var(--mantine-primary-color-filled-hover);
+  }
+}
+
+.add-btn-background-1 {
+  background-color: var(--mantine-color-dark-6);
+  width: $add-btn-wrapper-size;
+  height: $add-btn-wrapper-size;
+  top:0px;
+  z-index: -1;
+  position: absolute;
+}
+
+.add-btn-background-2 {
+  background-color: var(--mantine-color-dark-6);
+  width:  $add-btn-wrapper-size;
+  height:  $add-btn-wrapper-size;
+  position: absolute;
+  top: -13px;
+  z-index: -2;
+  border-radius: 50%;
+  border: 2px solid var(--mantine-color-dark-5);
+}
+
+.nav-item.active {
+  fill: var(--mantine-primary-color-4);
+  color: var(--mantine-primary-color-4);
+}

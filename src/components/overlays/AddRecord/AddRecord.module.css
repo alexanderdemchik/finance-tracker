@@ -1,0 +1,21 @@
+.header {
+  background-color: var(--mantine-color-body-light);
+  padding: var(--mantine-spacing-xs);
+  box-shadow: var(--mantine-shadow-xs);
+}
+
+.header > div > div {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+}
+
+.header :global(.mantine-SegmentedControl-root) {
+  flex-grow: 1;
+}
+
+.header .title {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}

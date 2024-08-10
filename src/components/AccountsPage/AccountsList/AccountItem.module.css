@@ -1,0 +1,23 @@
+.wrapper {
+  cursor: pointer;
+
+  @media (pointer: coarse) {
+    &:not([data-disabled]):active { background-color: var(--mantine-color-body-light-heavy); }
+  }
+}
+
+.icon {
+  border-radius: var(--mantine-radius-md);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+
+  & svg {
+    color: var(--mantine-color-body-light);
+    font-size: var(--mantine-font-size-sm);
+    
+  }
+}

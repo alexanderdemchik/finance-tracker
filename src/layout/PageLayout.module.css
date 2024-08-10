@@ -1,0 +1,14 @@
+.wrapper {
+  height: 100vh;
+}
+
+.header {
+  background: var(--mantine-color-body-light);
+  min-height: fit-content;
+  box-shadow: var(--mantine-shadow-xs);
+}
+
+.body {
+  flex-grow: 1;
+  overflow: auto;
+}

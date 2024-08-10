@@ -1,0 +1,22 @@
+.icon-wrapper {
+  background: var(--mantine-color-dark-6);
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mantine-spacing-xs);
+}
+
+.category {
+  cursor: pointer;
+}
+
+.category.active .icon-wrapper {
+  background: var(--mantine-primary-color-filled);
+  
+}
+
+.category.active .icon-wrapper svg {
+  color: var(--mantine-color-body-light);
+}

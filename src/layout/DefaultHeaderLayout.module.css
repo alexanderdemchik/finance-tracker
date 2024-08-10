@@ -1,0 +1,4 @@
+.wrapper {
+  box-shadow: var(--mantine-shadow-xs);
+  background: var(--mantine-color-body-light);
+}

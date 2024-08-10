@@ -1,0 +1,10 @@
+.button {
+  @media(hover: hover) and (pointer: coarse){
+    &:not([data-disabled]):hover { background-color: var(--button-bg) }
+  }
+
+  @media (pointer: coarse) {
+    &:not([data-disabled]):active { background-color: var(--button-hover, var(--mantine-primary-color-filled-hover)); }
+  }
+
+}

@@ -1,0 +1,19 @@
+.wrapper {
+  background-color: var(--mantine-color-body-dark-heavy);
+}
+
+.input input {
+  border: none
+}
+
+.account {
+  background-color: var(--mantine-color-body-light);
+  display: flex;
+  padding: 4px;
+  border-radius: var(--mantine-radius-sm);
+  border: 1px solid transparent;
+}
+
+.account.selected {
+  border: 1px solid var(--mantine-primary-color-filled);
+}
