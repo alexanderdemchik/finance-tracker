@@ -46,7 +46,7 @@ export const SwipeableTabs = ({ children, value, onChange, disabled = false }: I
   }, [value]);
 
   const content = children.map((child, i) => (
-    <div key={i} style={{ width: '100vw' }}>
+    <div key={i} style={{ width: '100%', height: '100%' }}>
       {child}
     </div>
   ));
@@ -59,7 +59,8 @@ export const SwipeableTabs = ({ children, value, onChange, disabled = false }: I
           display: 'flex',
           flexDirection: 'row',
           height: '100%',
-          touchAction: 'none',
+          maxHeight: '100%',
+          touchAction: 'pan-y',
         }}
         draggable={false}
         drag={disabled ? false : 'x'}
@@ -69,7 +70,21 @@ export const SwipeableTabs = ({ children, value, onChange, disabled = false }: I
         dragConstraints={constraintsRef}
         dragElastic={0}
       >
-        {content}
+        {content.map((el) => (
+          <motion.div
+            layoutScroll
+            style={{
+              overflow: 'scroll',
+              height: '100%',
+              maxHeight: '100%',
+              touchAction: 'pan-y',
+              minWidth: `calc(100% / ${content.length})`,
+              maxWidth: `calc(100% / ${content.length})`,
+            }}
+          >
+            {el}
+          </motion.div>
+        ))}
       </motion.div>
     </div>
   );

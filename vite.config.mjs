@@ -10,7 +10,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './vitest.setup.mjs',
   },
-  server: {
-    host: '192.168.100.4',
-  },
+  // server: {
+  //   host: '192.168.100.12',
+  //   https: true,
+  // },
 });

@@ -36,7 +36,6 @@ export function CategorySettings() {
             ]}
             value={activeTab}
             onChange={(val) => toggleTab(val as RecordTypeEnum)}
-            size="xs"
           />
         </DefaultHeaderLayout>
       }
@@ -47,7 +46,7 @@ export function CategorySettings() {
       </SwipeableTabs>
 
       <Flex className={classes['add-btn']}>
-        <Button fullWidth onClick={() => toggleIsAddCatOpen()} size="sm">
+        <Button fullWidth onClick={() => toggleIsAddCatOpen()} size="md">
           Добавить категорию
         </Button>
       </Flex>

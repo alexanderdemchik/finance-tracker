@@ -10,4 +10,13 @@ body {
   .grow {
     flex-grow: 1;
   }
+
+  .center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nowrap {
+    flex-wrap: nowrap;
+  }
 }

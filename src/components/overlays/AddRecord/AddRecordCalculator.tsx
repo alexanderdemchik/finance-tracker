@@ -8,6 +8,8 @@ import { applyOperation } from '../../../helpers/math';
 import { useAccounts } from '../../../hooks/useAccounts';
 import { iconsToComponentsMap } from '../../../constants/iconsToComponentsMap';
 import { CurrencyCodeEnum, signByCurrencyCode } from '../../../constants/currencies';
+import { PartialSlideUpOverlay } from '@/layout/SlideUpOverlay/PartialSlideUpOverlay';
+import { useToggle } from '@mantine/hooks';
 
 enum SpecialButtonsEnum {
   DATE = 'DATE',
@@ -172,8 +174,16 @@ export const AddRecordCalculator = ({ onAccept }: IAddRecordCalculatorProps) => 
     );
   };
 
+  const [open, setOpen] = useToggle();
+
   return (
     <Stack p="xs" gap="xs" className={classes.wrapper}>
+      <PartialSlideUpOverlay
+        open={open}
+        id="test"
+        onClose={() => setOpen(false)}
+        height={70}
+      ></PartialSlideUpOverlay>
       <Group justify="space-between">
         <Group gap="xs">
           {accounts.map((acc) => {
@@ -184,6 +194,7 @@ export const AddRecordCalculator = ({ onAccept }: IAddRecordCalculatorProps) => 
                 className={clsx(classes.account, {
                   [classes.selected]: selectedAccountId === acc.id,
                 })}
+                style={{ '--color': acc.color! }}
                 onClick={() => setSelectedAccountId(acc.id)}
               >
                 <Icon />
@@ -191,9 +202,14 @@ export const AddRecordCalculator = ({ onAccept }: IAddRecordCalculatorProps) => 
             );
           })}
         </Group>
-        <Text fw={500} size="lg">
-          {!!selectedAcc && signByCurrencyCode[selectedAcc.currency!]} {resultField}
-        </Text>
+        <Group align="center" gap="xxs">
+          <Text fw={400} component="span" size="sm" c="dimmed" mt="xxs" onClick={() => setOpen()}>
+            {selectedAcc?.currency! || ''}
+          </Text>
+          <Text fw={500} size="xl">
+            {resultField}
+          </Text>
+        </Group>
       </Group>
       <Input placeholder="Введите примечание" className={classes.input} />
       <SimpleGrid cols={4} spacing={4}>

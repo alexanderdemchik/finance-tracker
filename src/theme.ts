@@ -41,7 +41,7 @@ export const theme = createTheme({
     ],
   },
   spacing: {
-    xxs: rem(4),
+    xxs: rem(6),
   },
   autoContrast: true,
   /** Put your mantine theme override here */

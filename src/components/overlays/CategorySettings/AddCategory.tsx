@@ -40,7 +40,6 @@ export function AddCategory() {
                 value={field.value}
                 onChange={(val) => field.onChange(val)}
                 style={{ borderRadius: 0 }}
-                size="xs"
                 data={[
                   { label: 'Расходы', value: RecordTypeEnum.EXPENSES },
                   { label: 'Доходы', value: RecordTypeEnum.INCOME },

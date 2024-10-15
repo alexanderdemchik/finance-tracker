@@ -41,9 +41,11 @@ export enum RecordTypeEnum {
 export interface IRecord {
   id: string;
   value: number;
+  originalValue: number;
   categoryId: string;
   accountId: string;
   currency: CurrencyCodeEnum;
+  originalCurrency: CurrencyCodeEnum;
   date: number;
   type: RecordTypeEnum;
 }

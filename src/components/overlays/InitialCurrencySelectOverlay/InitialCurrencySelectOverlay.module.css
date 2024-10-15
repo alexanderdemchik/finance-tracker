@@ -20,6 +20,12 @@
 }
 
 .confirm {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+.confirm-wrapper {
   position: fixed;
   left: 0;
   right: 0;

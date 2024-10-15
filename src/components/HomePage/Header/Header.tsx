@@ -8,6 +8,7 @@ import { MonthPicker } from '@mantine/dates';
 import classes from './Header.module.css';
 import { useDefaultCurrency } from '../../../hooks/useDefaultCurrency';
 import { signByCurrencyCode } from '../../../constants/currencies';
+import { DefaultHeaderLayout } from '@/layout/DefaultHeaderLayout';
 
 interface IHeaderProps {
   date: Date;
@@ -29,36 +30,37 @@ export function Header({ date, income, expenses, onDateChange }: IHeaderProps) {
 
   return (
     <>
-      <Group justify="space-between" p="xs">
-        <FaFilter />
-        <Title order={5}>Финансы</Title>
-        <FaCalendarAlt />
-      </Group>
+      <DefaultHeaderLayout
+        left={<FaFilter />}
+        right={<FaCalendarAlt />}
+        title="Финансы"
+        border={false}
+      />
 
       <Group px="xs" pb="xxs" justify="space-between">
         <Stack gap={0} onClick={open}>
-          <Text size="xs" c="dimmed">
+          <Text size="sm" c="dimmed">
             {dayjs(date).format('YYYY')}
           </Text>
-          <Text tt="capitalize" fw={500} lh="xs" className={classes.month}>
+          <Text tt="capitalize" size="lg" fw={500} lh="xs" className={classes.month}>
             {dayjs(date).format('MMMM')} <FaCaretDown />
           </Text>
         </Stack>
 
         <Group gap="lg">
           <Stack gap={0}>
-            <Text size="xs" c="dimmed">
+            <Text c="dimmed" size="sm">
               Расходы
             </Text>
-            <Text tt="capitalize" fw={500}>
+            <Text tt="capitalize" fw={500} size="lg">
               {sign} {expenses}
             </Text>
           </Stack>
           <Stack gap={0}>
-            <Text size="xs" c="dimmed">
+            <Text size="sm" c="dimmed">
               Доходы
             </Text>
-            <Text tt="capitalize" fw={500}>
+            <Text tt="capitalize" fw={500} size="lg">
               {sign} {income}
             </Text>
           </Stack>

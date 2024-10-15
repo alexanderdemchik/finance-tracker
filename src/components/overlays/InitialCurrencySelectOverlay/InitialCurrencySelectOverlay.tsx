@@ -42,6 +42,7 @@ export const InitialCurrencySelectOverlay = () => {
           placeholder={t('placeholder')}
           value={currency}
           onChange={(val) => setCurrency(val as CurrencyCodeEnum)}
+          comboboxProps={{ position: 'bottom', middlewares: { flip: false, shift: false } }}
         />
 
         <Text size="xs" c="dimmed">
@@ -50,14 +51,16 @@ export const InitialCurrencySelectOverlay = () => {
       </Stack>
 
       {currency && (
-        <Button
-          radius={0}
-          className={classes.confirm}
-          size="md"
-          onClick={() => setInitialCurrency(currency)}
-        >
-          {t('confirm')}
-        </Button>
+        <div className={classes['confirm-wrapper']}>
+          <Button
+            radius={0}
+            className={classes.confirm}
+            size="md"
+            onClick={() => setInitialCurrency(currency)}
+          >
+            {t('confirm')}
+          </Button>
+        </div>
       )}
     </Paper>
   );

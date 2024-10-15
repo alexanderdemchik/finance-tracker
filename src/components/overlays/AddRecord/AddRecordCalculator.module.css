@@ -7,7 +7,9 @@
 }
 
 .account {
-  background-color: var(--mantine-color-body-light);
+  --result-color: var(--color, var(--mantine-primary-color-filled));
+  background-color: alpha(var(--result-color), 0.1);
+  color: var(--result-color);
   display: flex;
   padding: 4px;
   border-radius: var(--mantine-radius-sm);

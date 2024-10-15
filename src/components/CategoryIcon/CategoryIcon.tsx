@@ -9,10 +9,12 @@ interface ICategoryIconProps {
 
 export function CategoryIcon({ icon, color }: ICategoryIconProps) {
   const Icon = iconsToComponentsMap[icon];
-  const bg = getDefaultGradient(color);
 
   return (
-    <div className={classes.wrapper} style={{ background: bg }}>
+    <div
+      className={classes.wrapper}
+      style={{ '--color': color || 'var(--mantine-primary-color-filled)' }}
+    >
       <Icon size={14} />
     </div>
   );

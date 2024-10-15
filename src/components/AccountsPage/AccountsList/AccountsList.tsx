@@ -7,20 +7,23 @@ import { AddAccount } from '../../overlays/AddAccount/AddAccount';
 
 export function AccountsList() {
   const { accounts } = useAccounts();
-  const [isAddAccount, toggle] = useToggle();
+  const [isAddAccount, toggleAddAccount] = useToggle();
+
   return (
     <Stack gap={0}>
       {accounts.map((el) => (
         <AccountItem account={el} key={el.id} />
       ))}
-      <Group m="md">
-        <Button variant="outline" onClick={() => toggle()}>
+      <Group m="md" className="center nowrap" gap="xs">
+        <Button variant="outline" onClick={() => toggleAddAccount()} fullWidth>
           Добавить счёт
         </Button>
-        <Button variant="outline">Управление счетами</Button>
+        <Button variant="outline" fullWidth>
+          Управление счетами
+        </Button>
       </Group>
 
-      <SlideUpOverlay open={isAddAccount} onClose={() => toggle()} id="add-account">
+      <SlideUpOverlay open={isAddAccount} onClose={() => toggleAddAccount()} id="add-account">
         <AddAccount />
       </SlideUpOverlay>
     </Stack>

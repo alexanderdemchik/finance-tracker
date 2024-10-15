@@ -44,7 +44,6 @@ export const AddRecord = () => {
           styles={{ root: { borderRadius: 0 } }}
           value={tab}
           onChange={(val) => toggleTab(val as TAB_ITEMS)}
-          size="xs"
           data={[
             { label: t('expenses'), value: TAB_ITEMS.EXPENSES },
             { label: t('income'), value: TAB_ITEMS.INCOME },

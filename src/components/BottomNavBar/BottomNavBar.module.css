@@ -1,8 +1,8 @@
-$add-btn-size: 40px;
-$add-btn-wrapper-size: 48px;
+$add-btn-size: 50px;
+$add-btn-wrapper-size: 58px;
 
 :root {
-  --bottom-nav-bar-height: 45px;
+  --bottom-nav-bar-height: 65px;
 }
 
 .wrapper {
@@ -12,6 +12,8 @@ $add-btn-wrapper-size: 48px;
   bottom: 0;
   width: 100%;
   border-top: 2px solid var(--mantine-color-dark-5);
+  height: var(--bottom-nav-bar-height);
+  align-items: center;
 }
 
 .wrapper button {
@@ -29,6 +31,10 @@ $add-btn-wrapper-size: 48px;
   cursor: pointer;
   padding-top: 4px;
   padding-bottom: 4px;
+
+  & svg {
+    font-size: var(--mantine-font-size-xl);
+  }
 }
 
 .add-btn-wrapper {

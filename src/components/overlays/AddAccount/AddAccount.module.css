@@ -1,7 +1,9 @@
 .icon-wrapper {
   border-radius: var(--mantine-radius-default);
-  padding: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xxs);
   background: var(--mantine-color-body-light-heavy);
+  width: 35px;
+  height: 35px;
 
   & svg {
     width: 100%;

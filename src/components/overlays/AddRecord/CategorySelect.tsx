@@ -25,7 +25,7 @@ export function CategorySelect({ type, value, onChange }: ICategorySelectProps) 
   );
 
   return (
-    <SimpleGrid cols={5} p="md">
+    <SimpleGrid cols={4} p="md">
       {categoriesToDisplay.map((cat) => {
         const Icon = iconsToComponentsMap[cat.icon];
         return (
@@ -36,18 +36,21 @@ export function CategorySelect({ type, value, onChange }: ICategorySelectProps) 
             className={clsx(classes.category, { [classes.active]: value === cat.id })}
             onClick={() => onChange(cat.id)}
           >
-            <div className={classes['icon-wrapper']}>
-              <Icon size={20} />
+            <div
+              className={classes['icon-wrapper']}
+              style={{ '--color': cat.color || 'var(--mantine-primary-color-filled)' }}
+            >
+              <Icon />
             </div>
-            <Text size="xs">{cat.title}</Text>
+            <Text size="sm">{cat.title}</Text>
           </Stack>
         );
       })}
       <Stack align="center" gap={1} className={classes.category} onClick={() => toggle()}>
-        <div className={classes['icon-wrapper']}>
-          <FaPlus size={20} />
+        <div className={clsx(classes['icon-wrapper'], classes['settings-icon'])}>
+          <FaPlus />
         </div>
-        <Text size="xs">Настройки</Text>
+        <Text size="sm">Настройки</Text>
       </Stack>
 
       <SlideUpOverlay open={isCategorySettingsOpen} onClose={toggle} id="cat-settings">

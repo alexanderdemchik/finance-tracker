@@ -1,11 +1,19 @@
 .icon-wrapper {
-  background: var(--mantine-color-dark-6);
-  border-radius: 50%;
+  border-radius: var(--mantine-radius-md);
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--mantine-spacing-xs);
+  width: 60%;
+  --result-color: var(--color, var(--mantine-primary-color-filled));
+  background: alpha(var(--result-color), 0.1);
+  color: var(--result-color);
+
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .category {
@@ -13,10 +21,13 @@
 }
 
 .category.active .icon-wrapper {
-  background: var(--mantine-primary-color-filled);
+  background: alpha(var(--result-color), 0.3);
+  color: var(--result-color);
+  border: 1px solid var(--mantine-primary-color-filled);
   
 }
 
-.category.active .icon-wrapper svg {
-  color: var(--mantine-color-body-light);
+.settings-icon {
+  background: alpha(var(--mantine-color-dark-6), 0.6);
+  color: var(--mantine-color-dimmed);
 }

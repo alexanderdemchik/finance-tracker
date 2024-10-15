@@ -7,6 +7,6 @@ export const createRecordsSlice: StateCreator<IStoreState, [], [], IRecordsSlice
   addRecord: (record: IRecord) => {
     recordsDb.add(record);
     set((state) => ({ records: [...state.records, record] }));
-    get().updateAccountBalance(record.id, record.value, record.type);
+    get().updateAccountBalance(record.accountId, record.value, record.type);
   },
 });
