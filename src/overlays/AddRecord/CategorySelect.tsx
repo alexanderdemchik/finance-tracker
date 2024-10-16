@@ -3,11 +3,11 @@ import { SimpleGrid, Stack, Text } from '@mantine/core';
 import clsx from 'clsx';
 import { useToggle } from '@mantine/hooks';
 import { FaPlus } from 'react-icons/fa6';
-import { iconsToComponentsMap } from '../../../constants/iconsToComponentsMap';
+import { iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
 import classes from './CategorySelect.module.css';
-import { RecordTypeEnum } from '../../../store/types';
-import { useCategories } from '../../../hooks/useCategories';
-import { SlideUpOverlay } from '../../../layout/SlideUpOverlay/SlideUpOverlay';
+import { RecordTypeEnum } from '../../store/types';
+import { useCategories } from '../../hooks/useCategories';
+import { SlideUpOverlay } from '../../layout/SlideUpOverlay/SlideUpOverlay';
 import { CategorySettings } from '../CategorySettings/CategorySettings';
 
 interface ICategorySelectProps {

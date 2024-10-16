@@ -1,8 +1,8 @@
 import { Group, Text } from '@mantine/core';
-import { ICategory, IRecord, RecordTypeEnum } from '../../../store/types';
+import { ICategory, IRecord, RecordTypeEnum } from '../../../../store/types';
 import classes from './RecordItem.module.css';
-import { signByCurrencyCode } from '../../../constants/currencies';
-import { CategoryIcon } from '../../CategoryIcon/CategoryIcon';
+import { signByCurrencyCode } from '../../../../constants/currencies';
+import { CategoryIcon } from '../../../../components/CategoryIcon/CategoryIcon';
 
 interface Props {
   record: IRecord;

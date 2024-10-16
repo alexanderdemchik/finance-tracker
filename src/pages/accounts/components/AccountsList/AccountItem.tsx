@@ -1,7 +1,7 @@
 import { Group, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { iconsToComponentsMap } from '../../../constants/iconsToComponentsMap';
-import { IAccount } from '../../../store/types';
+import { iconsToComponentsMap } from '../../../../constants/iconsToComponentsMap';
+import { IAccount } from '../../../../store/types';
 import classes from './AccountItem.module.css';
 
 interface IAccountItemProps {

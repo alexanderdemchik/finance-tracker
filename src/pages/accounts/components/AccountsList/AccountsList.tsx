@@ -1,9 +1,9 @@
 import { Button, Group, Stack } from '@mantine/core';
 import { useToggle } from '@mantine/hooks';
-import { useAccounts } from '../../../hooks/useAccounts';
+import { useAccounts } from '../../../../hooks/useAccounts';
 import { AccountItem } from './AccountItem';
-import { SlideUpOverlay } from '../../../layout/SlideUpOverlay/SlideUpOverlay';
-import { AddAccount } from '../../overlays/AddAccount/AddAccount';
+import { SlideUpOverlay } from '../../../../layout/SlideUpOverlay/SlideUpOverlay';
+import { AddAccount } from '../../../../overlays/AddAccount/AddAccount';
 
 export function AccountsList() {
   const { accounts } = useAccounts();

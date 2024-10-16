@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import { BottomNavBar } from '../BottomNavBar/BottomNavBar';
-import { AddRecord } from '../overlays/AddRecord/AddRecord';
+import { BottomNavBar } from '../../components/BottomNavBar/BottomNavBar';
+import { AddRecord } from '../../overlays/AddRecord/AddRecord';
 import { useAppStore } from '../../store/store';
-import { SlideUpOverlay } from '../../layout/SlideUpOverlay/SlideUpOverlay';
-import { InitialCurrencySelectOverlay } from '../overlays/InitialCurrencySelectOverlay/InitialCurrencySelectOverlay';
+import { SlideUpOverlay } from '../SlideUpOverlay/SlideUpOverlay';
+import { InitialCurrencySelectOverlay } from '../../overlays/InitialCurrencySelectOverlay/InitialCurrencySelectOverlay';
 
 export const RouterLayout = () => {
   const isAddingRecord = useAppStore((state) => state.layout.isAddingRecord);

@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { MonthPicker } from '@mantine/dates';
 import classes from './Header.module.css';
-import { useDefaultCurrency } from '../../../hooks/useDefaultCurrency';
-import { signByCurrencyCode } from '../../../constants/currencies';
+import { useDefaultCurrency } from '../../../../hooks/useDefaultCurrency';
+import { signByCurrencyCode } from '../../../../constants/currencies';
 import { DefaultHeaderLayout } from '@/layout/DefaultHeaderLayout';
 
 interface IHeaderProps {

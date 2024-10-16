@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HomePage } from './pages/Home.page';
-import { RouterLayout } from './components/RouterLayout/RouterLayout';
+import { HomePage } from './pages/home/Home.page';
+import { RouterLayout } from './layout/RouterLayout/RouterLayout';
 import { ChartsPage } from './pages/Charts.page';
 import { RoutesPathsEnum } from './constants/routes';
-import { AccountsPage } from './pages/Accounts.page';
+import { AccountsPage } from './pages/accounts/Accounts.page';
 
 const router = createBrowserRouter([
   {

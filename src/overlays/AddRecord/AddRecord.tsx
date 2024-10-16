@@ -5,14 +5,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 import { CategorySelect } from './CategorySelect';
-import { SwipeableTabs } from '../../SwipeableTabs/SwipeableTabs';
-import { useCategories } from '../../../hooks/useCategories';
+import { SwipeableTabs } from '../../components/SwipeableTabs/SwipeableTabs';
+import { useCategories } from '../../hooks/useCategories';
 import { AddRecordCalculator } from './AddRecordCalculator';
-import { useAppStore } from '../../../store/store';
-import { RoutesPathsEnum } from '../../../constants/routes';
-import { RecordTypeEnum } from '../../../store/types';
-import { DefaultHeaderLayout } from '../../../layout/DefaultHeaderLayout';
-import { BackButton } from '../../BackButton/BackButton';
+import { useAppStore } from '../../store/store';
+import { RoutesPathsEnum } from '../../constants/routes';
+import { RecordTypeEnum } from '../../store/types';
+import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
+import { BackButton } from '../../components/BackButton/BackButton';
 
 enum TAB_ITEMS {
   EXPENSES = 'EXPENSES',

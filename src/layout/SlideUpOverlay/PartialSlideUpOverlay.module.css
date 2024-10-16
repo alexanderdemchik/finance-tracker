@@ -7,7 +7,6 @@
   transform: translateY(100vh);
   transition: transform .7s cubic-bezier(0.29, 1, 0.17, 1);
   z-index: var(--mantine-z-index-overlay);
-  border-top-left-radius: var(--mantine-radius-xl);
-  border-top-right-radius: var(--mantine-radius-xl);
   box-shadow: var(--mantine-shadow-md);
+  overflow: hidden;
 }

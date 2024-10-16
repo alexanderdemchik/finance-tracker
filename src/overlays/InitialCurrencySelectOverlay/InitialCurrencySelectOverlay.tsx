@@ -3,20 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { BsCashCoin } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import classes from './InitialCurrencySelectOverlay.module.css';
-import { currencies, CurrencyCodeEnum } from '../../../constants/currencies';
-import { useAppStore } from '../../../store/store';
+import { CurrencyCodeEnum } from '../../constants/currencies';
+import { useAppStore } from '../../store/store';
+import { getSortedCurrencies } from '@/helpers/currency';
 
 export const InitialCurrencySelectOverlay = () => {
   const { t: tCurrency } = useTranslation(undefined, { keyPrefix: 'currencies' });
   const { t } = useTranslation(undefined, { keyPrefix: 'initial-currency-selection' });
   const setInitialCurrency = useAppStore((state) => state.setInitialCurrency);
 
-  const sortedCurrencies = currencies.map((el) => ({
-    value: el.code,
-    label: `${tCurrency(el.code)}(${el.sign}) - ${el.code}`,
-  }));
+  const sortedCurrencies = getSortedCurrencies(tCurrency);
 
   const [currency, setCurrency] = useState<CurrencyCodeEnum | null>(null);
+
+  const comboboxData = sortedCurrencies.map((el) => ({
+    value: el.code,
+    label: `${el.label}(${el.sign}) - ${el.code}`,
+  }));
 
   useEffect(() => {
     // predict user country
@@ -37,7 +40,7 @@ export const InitialCurrencySelectOverlay = () => {
           {t('select-currency')}
         </Text>
         <Select
-          data={sortedCurrencies}
+          data={comboboxData}
           searchable
           placeholder={t('placeholder')}
           value={currency}

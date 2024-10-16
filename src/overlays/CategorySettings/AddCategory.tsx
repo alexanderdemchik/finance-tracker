@@ -3,14 +3,14 @@ import { Button, Flex, Group, SegmentedControl, SimpleGrid, Stack } from '@manti
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
-import { DefaultHeaderLayout } from '../../../layout/DefaultHeaderLayout';
-import { PageLayout } from '../../../layout/PageLayout';
-import { BackButton } from '../../BackButton/BackButton';
-import { ICategory, RecordTypeEnum } from '../../../store/types';
-import { FormTextInput } from '../../forms/FormTextInput';
-import { AvailableIconsType, iconsToComponentsMap } from '../../../constants/iconsToComponentsMap';
+import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
+import { PageLayout } from '../../layout/PageLayout';
+import { BackButton } from '../../components/BackButton/BackButton';
+import { ICategory, RecordTypeEnum } from '../../store/types';
+import { FormTextInput } from '../../components/forms/FormTextInput';
+import { AvailableIconsType, iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
 import classes from './AddCategory.module.css';
-import { useCategories } from '../../../hooks/useCategories';
+import { useCategories } from '../../hooks/useCategories';
 
 export function AddCategory() {
   const icons = Object.keys(iconsToComponentsMap);

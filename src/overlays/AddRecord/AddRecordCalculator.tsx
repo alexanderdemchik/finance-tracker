@@ -3,13 +3,16 @@ import { FaCheck, FaEquals, FaMinus, FaPlus } from 'react-icons/fa6';
 import { FaBackspace, FaCalendarAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import clsx from 'clsx';
-import classes from './AddRecordCalculator.module.css';
-import { applyOperation } from '../../../helpers/math';
-import { useAccounts } from '../../../hooks/useAccounts';
-import { iconsToComponentsMap } from '../../../constants/iconsToComponentsMap';
-import { CurrencyCodeEnum, signByCurrencyCode } from '../../../constants/currencies';
-import { PartialSlideUpOverlay } from '@/layout/SlideUpOverlay/PartialSlideUpOverlay';
 import { useToggle } from '@mantine/hooks';
+import classes from './AddRecordCalculator.module.css';
+import { applyOperation } from '../../helpers/math';
+import { useAccounts } from '../../hooks/useAccounts';
+import { iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
+import { CurrencyCodeEnum } from '../../constants/currencies';
+import { PartialSlideUpOverlay } from '@/layout/SlideUpOverlay/PartialSlideUpOverlay';
+import { DefaultHeaderLayout } from '@/layout/DefaultHeaderLayout';
+import { BackButton } from '@/components/BackButton/BackButton';
+import { CurrencySelect } from '@/components/CurrencySelect/CurrencySelect';
 
 enum SpecialButtonsEnum {
   DATE = 'DATE',
@@ -174,16 +177,27 @@ export const AddRecordCalculator = ({ onAccept }: IAddRecordCalculatorProps) => 
     );
   };
 
-  const [open, setOpen] = useToggle();
+  const [isCurrencySelectOpen, toggleCurrencySelect] = useToggle();
+
+  const [selectedCurrency, setSelectedCurrency] = useState(selectedAcc?.currency);
 
   return (
     <Stack p="xs" gap="xs" className={classes.wrapper}>
       <PartialSlideUpOverlay
-        open={open}
-        id="test"
-        onClose={() => setOpen(false)}
-        height={70}
-      ></PartialSlideUpOverlay>
+        open={isCurrencySelectOpen}
+        id="currency-select"
+        onClose={() => toggleCurrencySelect(false)}
+        height={90}
+      >
+        <DefaultHeaderLayout title="Валюта" left={<BackButton />} />
+        <CurrencySelect
+          selected={selectedCurrency}
+          onChange={(code) => {
+            setSelectedCurrency(code);
+            toggleCurrencySelect();
+          }}
+        />
+      </PartialSlideUpOverlay>
       <Group justify="space-between">
         <Group gap="xs">
           {accounts.map((acc) => {
@@ -203,8 +217,15 @@ export const AddRecordCalculator = ({ onAccept }: IAddRecordCalculatorProps) => 
           })}
         </Group>
         <Group align="center" gap="xxs">
-          <Text fw={400} component="span" size="sm" c="dimmed" mt="xxs" onClick={() => setOpen()}>
-            {selectedAcc?.currency! || ''}
+          <Text
+            fw={400}
+            component="span"
+            size="sm"
+            c="dimmed"
+            mt="xxs"
+            onClick={() => toggleCurrencySelect()}
+          >
+            {selectedCurrency || ''}
           </Text>
           <Text fw={500} size="xl">
             {resultField}

@@ -1,9 +1,9 @@
-import { PageLayout } from '../layout/PageLayout';
-import { RecordsList } from '../components/HomePage/RecordsList/RecordsList';
-import { Header } from '../components/HomePage/Header/Header';
-import { useHomeStore } from '../store/pages/home';
-import { useRecordsByMonth } from '../hooks/useRecordsByMonth';
-import { useCalculateIncomeExpenses } from '../hooks/useCalculateIncomeExpenses';
+import { PageLayout } from '@/layout/PageLayout';
+import { RecordsList } from './components/RecordsList/RecordsList';
+import { Header } from './components/Header/Header';
+import { useHomeStore } from '@/store/pages/home';
+import { useRecordsByMonth } from '@/hooks/useRecordsByMonth';
+import { useCalculateIncomeExpenses } from '@/hooks/useCalculateIncomeExpenses';
 
 export function HomePage() {
   const { selectedDate, setSelectedDate } = useHomeStore();

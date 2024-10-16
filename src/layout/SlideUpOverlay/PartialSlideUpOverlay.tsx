@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Overlay, Stack, Transition as MantineTransition } from '@mantine/core';
+import { Overlay, Stack, Transition as MantineTransition, MantineSize } from '@mantine/core';
 import { createPortal } from 'react-dom';
 import classes from './PartialSlideUpOverlay.module.css';
 import { Queue } from '../../helpers/Queue';
@@ -20,6 +20,7 @@ interface ISlideUpOverlayProps {
   onClose: () => void;
   id: string;
   height?: number;
+  radius?: MantineSize;
 }
 
 export const PartialSlideUpOverlay = ({
@@ -28,6 +29,7 @@ export const PartialSlideUpOverlay = ({
   onClose,
   id,
   height = 80,
+  radius = 'md',
 }: ISlideUpOverlayProps) => {
   const nodeRef = useRef(null);
   const navigate = useNavigate();
@@ -77,7 +79,10 @@ export const PartialSlideUpOverlay = ({
               className={classes.wrapper}
               ref={nodeRef}
               style={{
-                height: `${height}vh`,
+                height: `${height}%`,
+                maxHeight: `${height}%`,
+                borderTopLeftRadius: `var(--mantine-radius-${radius})`,
+                borderTopRightRadius: `var(--mantine-radius-${radius})`,
                 ...transitionStyles[state],
               }}
             >
