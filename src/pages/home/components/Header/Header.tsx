@@ -30,12 +30,7 @@ export function Header({ date, income, expenses, onDateChange }: IHeaderProps) {
 
   return (
     <>
-      <DefaultHeaderLayout
-        left={<FaFilter />}
-        right={<FaCalendarAlt />}
-        title="Финансы"
-        border={false}
-      />
+      <DefaultHeaderLayout left={<FaFilter />} right={<FaCalendarAlt />} title="Финансы" border={false} />
 
       <Group px="xs" pb="xxs" justify="space-between">
         <Stack gap={0} onClick={open}>
@@ -50,18 +45,18 @@ export function Header({ date, income, expenses, onDateChange }: IHeaderProps) {
         <Group gap="lg">
           <Stack gap={0}>
             <Text c="dimmed" size="sm">
-              Расходы
+              Расходы {`(${sign})`}
             </Text>
-            <Text tt="capitalize" fw={500} size="lg">
-              {sign} {expenses}
+            <Text tt="capitalize" fw={500} size="lg" ta="right">
+              {expenses}
             </Text>
           </Stack>
           <Stack gap={0}>
             <Text size="sm" c="dimmed">
-              Доходы
+              Доходы {`(${sign})`}
             </Text>
-            <Text tt="capitalize" fw={500} size="lg">
-              {sign} {income}
+            <Text tt="capitalize" fw={500} size="lg" ta="right">
+              {income}
             </Text>
           </Stack>
         </Group>

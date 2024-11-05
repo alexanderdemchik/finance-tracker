@@ -86,7 +86,7 @@ export const RecordsList = ({ records }: IRecordsProps) => {
           <Divider />
           {el.records.map((rec) => (
             <div key={rec.id}>
-              <RecordItem record={rec} category={categoriesById[rec.categoryId]} />
+              <RecordItem record={rec} category={categoriesById[rec.catId]} />
               <Divider />
             </div>
           ))}

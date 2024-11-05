@@ -1,5 +1,6 @@
 .wrapper {
   cursor: pointer;
+  min-width: 100%;
 
   @media (pointer: coarse) {
     &:not([data-disabled]):active { background-color: var(--mantine-color-body-light-heavy); }
@@ -19,4 +20,30 @@
     color: var(--mantine-color-body-light);
     font-size: var(--mantine-font-size-sm);
   }
+}
+
+.action-btn {
+  padding: 0 var(--mantine-spacing-xs);
+  border-radius: 0;
+  border: none;
+  min-width: 70px;
+  background-color: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-lg);
+}
+
+.action-btn:active {
+  background-color: var(--button-hover, var(--mantine-primary-color-filled-hover));
+}
+
+.action-btn:nth-of-type(2) {
+  background-color: var(--mantine-color-error);
+  color: var(--mantine-color-bright);
+}
+
+.action-btn:nth-of-type(2):active {
+  background-color: darken(var(--mantine-color-error), 0.1);
 }

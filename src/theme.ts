@@ -1,4 +1,4 @@
-import { colorsTuple, createTheme, CSSVariablesResolver, DEFAULT_THEME, rem } from '@mantine/core';
+import { colorsTuple, createTheme, CSSVariablesResolver, DEFAULT_THEME, rem, virtualColor } from '@mantine/core';
 import classes from './theme.module.css';
 
 export const resolver: CSSVariablesResolver = (theme) => ({
@@ -7,6 +7,7 @@ export const resolver: CSSVariablesResolver = (theme) => ({
     '--mantine-color-body-light': theme.colors.dark[6],
     '--mantine-color-body-dark': theme.colors.dark[8],
     '--mantine-color-body-dark-heavy': theme.colors.dark[9],
+    '--mantine-color-error-text': theme.colors.red[6],
   },
   light: {},
   dark: {},
@@ -39,9 +40,11 @@ export const theme = createTheme({
       '#1f1f1f',
       '#141414',
     ],
+    error: virtualColor({ name: 'error', dark: 'red', light: 'red' }),
   },
   spacing: {
     xxs: rem(6),
+    xxxs: rem(4),
   },
   autoContrast: true,
   /** Put your mantine theme override here */

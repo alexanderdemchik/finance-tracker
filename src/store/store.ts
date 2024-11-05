@@ -41,24 +41,17 @@ export const useAppStore = create<IStoreState>()(
       merge: (persistedState, currentState) => deepMerge(currentState, persistedState),
       partialize: (state) =>
         Object.fromEntries(
-          Object.entries(state).filter(
-            ([key]) => !['records', 'layout', '_hasHydrated'].includes(key)
-          )
+          Object.entries(state).filter(([key]) => !['records', 'layout', '_hasHydrated'].includes(key))
         ),
       onRehydrateStorage: () => (state) => {
-        state?.setCategories(
-          mergeCategoriesWithDefaultCategories(state.categories, defaultCategories)
-        );
+        state?.setCategories(mergeCategoriesWithDefaultCategories(state.categories, defaultCategories));
         state?.setHasHydrated(true);
       },
     }
   )
 );
 
-export function mergeCategoriesWithDefaultCategories(
-  cats: ICategory[],
-  defCats: ICategory[]
-): ICategory[] {
+export function mergeCategoriesWithDefaultCategories(cats: ICategory[], defCats: ICategory[]): ICategory[] {
   const catsIds = cats.map((el) => el.id);
   const defCatsToAdd = defCats.filter((el) => !catsIds.includes(el.id));
 

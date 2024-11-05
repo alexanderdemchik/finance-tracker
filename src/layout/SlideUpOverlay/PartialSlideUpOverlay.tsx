@@ -19,8 +19,9 @@ interface ISlideUpOverlayProps {
   children: React.ReactNode;
   onClose: () => void;
   id: string;
-  height?: number;
-  radius?: MantineSize;
+  height?: number | 'auto';
+  maxHeight?: number;
+  radius?: MantineSize | number;
 }
 
 export const PartialSlideUpOverlay = ({
@@ -29,6 +30,7 @@ export const PartialSlideUpOverlay = ({
   onClose,
   id,
   height = 80,
+  maxHeight,
   radius = 'md',
 }: ISlideUpOverlayProps) => {
   const nodeRef = useRef(null);
@@ -64,12 +66,26 @@ export const PartialSlideUpOverlay = ({
     };
   }, [open]);
 
+  const getBorderRadiusStyles = () => {
+    if (!radius) return {};
+
+    if (Number.isFinite(radius)) {
+      return {
+        borderTopLeftRadius: `${radius}px`,
+        borderTopRightRadius: `${radius}px`,
+      };
+    }
+
+    return {
+      borderTopLeftRadius: `var(--mantine-radius-${radius})`,
+      borderTopRightRadius: `var(--mantine-radius-${radius})`,
+    };
+  };
+
   return (
     <>
       <MantineTransition mounted={open} transition="fade" duration={400} timingFunction="ease">
-        {(styles) => (
-          <Overlay style={styles} color="#000" backgroundOpacity={0.75} onClick={onClose} />
-        )}
+        {(styles) => <Overlay style={styles} color="#000" backgroundOpacity={0.75} onClick={onClose} />}
       </MantineTransition>
       {createPortal(
         <Transition nodeRef={nodeRef} in={open} timeout={700} unmountOnExit>
@@ -79,10 +95,9 @@ export const PartialSlideUpOverlay = ({
               className={classes.wrapper}
               ref={nodeRef}
               style={{
-                height: `${height}%`,
-                maxHeight: `${height}%`,
-                borderTopLeftRadius: `var(--mantine-radius-${radius})`,
-                borderTopRightRadius: `var(--mantine-radius-${radius})`,
+                height: height === 'auto' ? 'auto' : `${height}%`,
+                maxHeight: maxHeight ? `${maxHeight}%` : height === 'auto' ? '100%' : `${height}%`,
+                ...getBorderRadiusStyles(),
                 ...transitionStyles[state],
               }}
             >

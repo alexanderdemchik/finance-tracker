@@ -1,10 +1,14 @@
-import { createStore, set, values } from 'idb-keyval';
+import { createStore, set as s, values, del as remove } from 'idb-keyval';
 import { IRecord } from '../store/types';
 
 const recordsStore = createStore('records', 'records');
 
-export function add(record: IRecord) {
-  return set(record.id, record, recordsStore);
+export function set(record: IRecord) {
+  return s(record.id, record, recordsStore);
+}
+
+export function del(id: string) {
+  return remove(id, recordsStore);
 }
 
 export function getAll() {

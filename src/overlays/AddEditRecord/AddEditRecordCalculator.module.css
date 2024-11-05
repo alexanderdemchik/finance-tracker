@@ -3,7 +3,7 @@
 }
 
 .input input {
-  border: none
+  border: none;
 }
 
 .account {
@@ -12,10 +12,23 @@
   color: var(--result-color);
   display: flex;
   padding: 4px;
-  border-radius: var(--mantine-radius-sm);
   border: 1px solid transparent;
+}
+
+.direction .account:last-child {
+  background-color: alpha(var(--result-color), 0.08);;
 }
 
 .account.selected {
   border: 1px solid var(--mantine-primary-color-filled);
+}
+
+.calc-field {
+  display: flex;
+  align-items: center;
+  white-space: pre;
+
+  & > svg {
+    font-size: 0.8rem;
+  }
 }

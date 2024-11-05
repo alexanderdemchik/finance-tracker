@@ -3,27 +3,28 @@ import { useTranslation } from 'react-i18next';
 import { iconsToComponentsMap } from '../../../../constants/iconsToComponentsMap';
 import { IAccount } from '../../../../store/types';
 import classes from './AccountItem.module.css';
+import { FaCheck } from 'react-icons/fa6';
 
 interface IAccountItemProps {
   account: IAccount;
+  selected?: boolean;
+  onClick?: (id: string) => void;
 }
 
-export function AccountItem({ account }: IAccountItemProps) {
+export function AccountItem({ account, selected, onClick }: IAccountItemProps) {
   const { t } = useTranslation();
   const Icon = iconsToComponentsMap[account.icon];
 
   return (
-    <Group justify="space-between" p="md" className={classes.wrapper}>
+    <Group justify="space-between" p="md" className={classes.wrapper} onClick={() => onClick?.(account.id)}>
       <Group gap="xs">
-        <div
-          style={{ '--color': account.color || 'var(--mantine-primary-color-filled)' }}
-          className={classes.icon}
-        >
+        <div style={{ '--color': account.color || 'var(--mantine-primary-color-filled)' }} className={classes.icon}>
           <Icon />
         </div>
         <Text>{account.title === '_default_' ? t('default-account-name') : account.title}</Text>
+        {!!selected && <FaCheck className={classes['select-icon']} />}
       </Group>
-      <Text>
+      <Text size="sm">
         {account.currency} {account.balance}
       </Text>
     </Group>

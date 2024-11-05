@@ -1,6 +1,7 @@
 import { StateCreator } from 'zustand';
 import { v4 } from 'uuid';
 import { IAccount, IAccountsSlice, IStoreState, RecordTypeEnum } from '../types';
+import { CurrencyCodeEnum } from '@/constants/currencies';
 
 export const BASE_ACCOUNT_TITLE = '_default_';
 
@@ -9,7 +10,7 @@ export const createAccountSlice: StateCreator<IStoreState, [], [], IAccountsSlic
     {
       id: v4(),
       title: BASE_ACCOUNT_TITLE,
-      currency: null,
+      currency: null as unknown as CurrencyCodeEnum,
       default: true,
       icon: 'moneyStack',
       balance: 0,

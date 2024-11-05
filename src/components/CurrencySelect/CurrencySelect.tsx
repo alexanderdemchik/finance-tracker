@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink, Radio, Stack } from '@mantine/core';
+import { CheckIcon, NavLink, Radio, Stack } from '@mantine/core';
 import { getSortedCurrencies } from '@/helpers/currency';
 import { CurrencyCodeEnum } from '@/constants/currencies';
 import classes from './CurencySelect.module.css';
@@ -21,7 +21,7 @@ export const CurrencySelect = ({ selected, onChange }: CurrencySelectProps) => {
           label={`${el.code} (${el.sign})`}
           description={el.label}
           component="div"
-          rightSection={<Radio checked={selected === el.code} readOnly />}
+          rightSection={<Radio checked={selected === el.code} readOnly icon={CheckIcon} />}
           onClick={() => onChange(el.code)}
         />
       ))}

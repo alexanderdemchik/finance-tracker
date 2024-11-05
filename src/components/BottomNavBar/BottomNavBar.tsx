@@ -60,7 +60,7 @@ export function BottomNavBar() {
           />
         </Grid.Col>
       </Grid>
-      <button className={classes['add-btn-wrapper']} onClick={toggleAddingRecord} type="button">
+      <button className={classes['add-btn-wrapper']} onClick={() => toggleAddingRecord()} type="button">
         <FaCirclePlus />
         <div className={classes['add-btn-background-1']} />
         <div className={classes['add-btn-background-2']} />

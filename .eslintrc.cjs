@@ -4,6 +4,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    'max-len': 120,
     'react/react-in-jsx-scope': 'off',
     'import/extensions': 'off',
     'jsx-a11y/click-events-have-key-events': 'warn',

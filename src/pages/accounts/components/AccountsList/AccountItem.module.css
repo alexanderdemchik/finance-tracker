@@ -22,3 +22,7 @@
     height: 100%;    
   }
 }
+
+.select-icon {
+  color: var(--mantine-primary-color-filled);
+}

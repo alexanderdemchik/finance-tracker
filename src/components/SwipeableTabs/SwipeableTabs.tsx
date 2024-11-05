@@ -1,3 +1,4 @@
+import { swipePower } from '@/helpers/animation';
 import { motion, PanInfo, useAnimation } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
@@ -6,10 +7,6 @@ interface ISwipeableTabs {
   value: number;
   onChange: (i: number) => void;
   disabled?: boolean;
-}
-
-export function swipePower(offset: number, absDistance: number): number {
-  return (offset / absDistance) * 100;
 }
 
 export const SwipeableTabs = ({ children, value, onChange, disabled = false }: ISwipeableTabs) => {

@@ -1,6 +1,7 @@
 import { CurrencyCodeEnum } from '../constants/currencies';
 import { CurrencyConvertFn } from '../hooks/useCurrencyConverter';
 import { IRecord, RecordTypeEnum } from '../store/types';
+import { formatNumber } from './numbers';
 
 export function calculateRecordsIncomeExpenses(
   recs: IRecord[],
@@ -12,11 +13,11 @@ export function calculateRecordsIncomeExpenses(
       if (curr.type === RecordTypeEnum.EXPENSES) {
         return {
           ...acc,
-          expenses: acc.expenses + converter(curr.value, curr.currency, defaultCurrency),
+          expenses: formatNumber(acc.expenses + converter(curr.value, curr.currency, defaultCurrency)),
         };
       }
 
-      return { ...acc, income: acc.income + converter(curr.value, curr.currency, defaultCurrency) };
+      return { ...acc, income: formatNumber(acc.income + converter(curr.value, curr.currency, defaultCurrency)) };
     },
     {
       expenses: 0,

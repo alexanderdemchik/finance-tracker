@@ -1,4 +1,4 @@
-import { Group, Stack, Title } from '@mantine/core';
+import { Group, Stack, Title, TitleOrder } from '@mantine/core';
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 import classes from './DefaultHeaderLayout.module.css';
@@ -9,6 +9,7 @@ interface IDefaultHeaderLayout {
   right?: ReactNode;
   children?: ReactNode;
   border?: boolean;
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export function DefaultHeaderLayout({
@@ -17,12 +18,15 @@ export function DefaultHeaderLayout({
   right = <svg />,
   children,
   border = true,
+  size = 'lg',
 }: IDefaultHeaderLayout) {
+  const sizeMap: Record<string, TitleOrder> = { sm: 6, md: 5, lg: 4 };
+
   return (
     <Stack gap={0} className={clsx(classes.wrapper, { [classes.border]: border })}>
       <Group p="xs" justify="space-between">
         <div>{left}</div>
-        <Title order={4} fw={500}>
+        <Title order={sizeMap[size]} fw={500}>
           {title}
         </Title>
         <div>{right}</div>

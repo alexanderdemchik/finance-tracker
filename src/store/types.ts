@@ -1,11 +1,7 @@
 import { CurrencyCodeEnum } from '../constants/currencies';
 import { AvailableIconsType } from '../constants/iconsToComponentsMap';
 
-export interface IStoreState
-  extends IAccountsSlice,
-    IRecordsSlice,
-    ISettingsSlice,
-    ICategoriesSlice {
+export interface IStoreState extends IAccountsSlice, IRecordsSlice, ISettingsSlice, ICategoriesSlice {
   layout: ILayoutSlice;
   _hasHydrated: boolean;
   setHasHydrated: (a: boolean) => void;
@@ -13,14 +9,15 @@ export interface IStoreState
 
 export interface ILayoutSlice {
   isAddingRecord: boolean;
-  toggleAddingRecord: () => void;
+  editRecordData?: IRecord;
+  toggleAddingRecord: (editData?: IRecord) => void;
 }
 
 export interface IAccount {
   id: string;
   title: string;
   default: boolean;
-  currency: CurrencyCodeEnum | null;
+  currency: CurrencyCodeEnum;
   icon: AvailableIconsType;
   color?: string;
   balance: number;
@@ -40,12 +37,13 @@ export enum RecordTypeEnum {
 
 export interface IRecord {
   id: string;
+  catId: string;
+  accId?: string;
+  targetAccId?: string;
   value: number;
-  originalValue: number;
-  categoryId: string;
-  accountId: string;
   currency: CurrencyCodeEnum;
-  originalCurrency: CurrencyCodeEnum;
+  originalValue?: number;
+  originalCurrency?: CurrencyCodeEnum;
   date: number;
   type: RecordTypeEnum;
 }
@@ -53,6 +51,8 @@ export interface IRecord {
 export interface IRecordsSlice {
   records: IRecord[];
   addRecord: (rec: IRecord) => void;
+  delRecord: (rec: IRecord) => void;
+  editRecord: (rec: IRecord) => void;
 }
 
 export interface ISettingsSlice {

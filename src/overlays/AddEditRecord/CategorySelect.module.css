@@ -23,7 +23,7 @@
 .category.active .icon-wrapper {
   background: alpha(var(--result-color), 0.3);
   color: var(--result-color);
-  border: 1px solid var(--mantine-primary-color-filled);
+  border: 1px solid var(--result-color);
   
 }
 
