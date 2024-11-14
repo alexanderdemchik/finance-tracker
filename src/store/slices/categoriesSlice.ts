@@ -1,11 +1,17 @@
 import { StateCreator } from 'zustand';
-import { ICategoriesSlice, ICategory, IStoreState } from '../types';
+import { IStoreState } from '../store';
+import { ICategory } from '@/types/ICategory';
 
 export const BASE_ACCOUNT_TITLE = '_default_';
 
-export const createCategoriesSlice: StateCreator<IStoreState, [], [], ICategoriesSlice> = (
-  set
-) => ({
+export interface ICategoriesSlice {
+  categories: ICategory[];
+  setCategories: (cats: ICategory[]) => void;
+  toggleCategoryVisibility: (id: string) => void;
+  addCategory: (cat: ICategory) => void;
+}
+
+export const createCategoriesSlice: StateCreator<IStoreState, [], [], ICategoriesSlice> = (set) => ({
   categories: [],
   setCategories: (categories: ICategory[]) => set({ categories }),
   toggleCategoryVisibility: (id: string) =>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { BsCashCoin } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import classes from './InitialCurrencySelectOverlay.module.css';
-import { CurrencyCodeEnum } from '../../constants/currencies';
+import { CurrencyCodeEnum } from "@/enums/CurrencyCodeEnum";
 import { useAppStore } from '../../store/store';
 import { getSortedCurrencies } from '@/helpers/currency';
 

@@ -1,6 +1,12 @@
 import { StateCreator } from 'zustand';
-import { ISettingsSlice, IStoreState } from '../types';
-import { CurrencyCodeEnum } from '../../constants/currencies';
+import { CurrencyCodeEnum } from '@/enums/CurrencyCodeEnum';
+import { IStoreState } from '../store';
+
+export interface ISettingsSlice {
+  currency: CurrencyCodeEnum;
+  setCurrency: (c: CurrencyCodeEnum) => void;
+  setInitialCurrency: (c: CurrencyCodeEnum) => void;
+}
 
 export const createSettingsSlice: StateCreator<IStoreState, [], [], ISettingsSlice> = (set) => ({
   currency: null as unknown as CurrencyCodeEnum,

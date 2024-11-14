@@ -30,7 +30,7 @@ export function Header({ date, income, expenses, onDateChange }: IHeaderProps) {
 
   return (
     <>
-      <DefaultHeaderLayout left={<FaFilter />} right={<FaCalendarAlt />} title="Финансы" border={false} />
+      <DefaultHeaderLayout right={<FaFilter />} title="Финансы" border={false} />
 
       <Group px="xs" pb="xxs" justify="space-between">
         <Stack gap={0} onClick={open}>

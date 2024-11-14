@@ -6,11 +6,12 @@ import { v4 } from 'uuid';
 import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
 import { PageLayout } from '../../layout/PageLayout';
 import { BackButton } from '../../components/BackButton/BackButton';
-import { ICategory, RecordTypeEnum } from '../../store/types';
 import { FormTextInput } from '../../components/forms/FormTextInput';
 import { AvailableIconsType, iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
 import classes from './AddCategory.module.css';
 import { useCategories } from '../../hooks/useCategories';
+import { ICategory } from '@/types/ICategory';
+import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
 
 export function AddCategory() {
   const icons = Object.keys(iconsToComponentsMap);

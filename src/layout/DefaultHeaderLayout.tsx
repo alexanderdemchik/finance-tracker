@@ -1,4 +1,4 @@
-import { Group, Stack, Title, TitleOrder } from '@mantine/core';
+import { Flex, Group, Stack, Title, TitleOrder } from '@mantine/core';
 import { ReactNode } from 'react';
 import clsx from 'clsx';
 import classes from './DefaultHeaderLayout.module.css';
@@ -25,11 +25,11 @@ export function DefaultHeaderLayout({
   return (
     <Stack gap={0} className={clsx(classes.wrapper, { [classes.border]: border })}>
       <Group p="xs" justify="space-between">
-        <div>{left}</div>
+        <Flex>{left}</Flex>
         <Title order={sizeMap[size]} fw={500}>
           {title}
         </Title>
-        <div>{right}</div>
+        <Flex>{right}</Flex>
       </Group>
       {children}
     </Stack>

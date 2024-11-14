@@ -1,5 +1,5 @@
 import { createStore, set as s, values, del as remove } from 'idb-keyval';
-import { IRecord } from '../store/types';
+import { IRecord } from '@/types/IRecord';
 
 const recordsStore = createStore('records', 'records');
 

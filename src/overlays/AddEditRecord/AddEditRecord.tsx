@@ -1,64 +1,77 @@
 import { Box, Flex, Group, SegmentedControl, Stack, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { useDidUpdate, useToggle } from '@mantine/hooks';
-import { useState } from 'react';
+import { useDidUpdate } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
+import { FaAngleRight, FaPlus } from 'react-icons/fa6';
 import { CategorySelect } from './CategorySelect';
 import { SwipeableTabs } from '../../components/SwipeableTabs/SwipeableTabs';
 import { useCategories } from '../../hooks/useCategories';
 import { AddEditRecordCalculator } from './AddEditRecordCalculator';
 import { useAppStore } from '../../store/store';
 import { RoutesPathsEnum } from '../../constants/routes';
-import { IRecord, RecordTypeEnum } from '../../store/types';
 import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
 import { BackButton } from '../../components/BackButton/BackButton';
-import { FaAngleRight, FaPlus } from 'react-icons/fa6';
 import classes from './AddEditRecord.module.css';
 import { PartialSlideUpOverlay } from '@/layout/SlideUpOverlay/PartialSlideUpOverlay';
-import { IBaseLocalStore, useLocalStore } from '@/store/useLocalStore';
+import { useAccounts } from '@/hooks/useAccounts';
+import { AccountItem } from '@/pages/accounts/components/AccountsList/AccountItem';
+import { getAccountTitle } from '@/helpers/account';
+import { getIconComponent } from '@/helpers/icons';
+import { useLocalStore } from '@/hooks/useLocalStore';
+import { IRecord } from '@/types/IRecord';
+import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
 
 interface IAddEditRecordProps {
   editData?: IRecord;
 }
 
-interface IAddEditRecordLocalStore extends IBaseLocalStore {
-  transferFrom?: string;
-  transferTo?: string;
+interface IAddEditRecordLocalStore {
+  sourceAccId?: string;
+  targetAccId?: string;
   selectedCategoryId?: string;
+  isAccountsSelectOpen?: 'to' | 'from';
   tabs: RecordTypeEnum[];
   tab: RecordTypeEnum;
 }
 
 export const AddEditRecord = ({ editData }: IAddEditRecordProps) => {
   const { t } = useTranslation(undefined, { keyPrefix: 'add-screen' });
+  const { t: baseT } = useTranslation();
 
   const {
     tab,
     tabs,
     setTab: toggleTab,
-    transferFrom,
-    transferTo,
+    sourceAccId,
+    targetAccId,
     selectedCategoryId,
     setSelectedCategoryId,
+    setIsAccountsSelectOpen,
+    isAccountsSelectOpen,
+    ...store
   } = useLocalStore<IAddEditRecordLocalStore>({
     tabs: [RecordTypeEnum.EXPENSES, RecordTypeEnum.INCOME, RecordTypeEnum.TRANSFER],
     tab: editData?.type || RecordTypeEnum.EXPENSES,
     selectedCategoryId: undefined,
-    transferFrom: undefined,
-    transferTo: undefined,
+    sourceAccId: editData?.type === RecordTypeEnum.TRANSFER ? editData.accId : undefined,
+    targetAccId: editData?.type === RecordTypeEnum.TRANSFER ? editData.targetAccId : undefined,
+    isAccountsSelectOpen: undefined,
   })();
 
   const { toggleAddingRecord } = useAppStore((state) => state.layout);
 
+  const { accounts, accountsById } = useAccounts();
   const navigate = useNavigate();
-  const category = useCategories().byId[selectedCategoryId || ''];
+  const category = useCategories().categoriesById[selectedCategoryId || ''];
 
   const addRecord = useAppStore((state) => state.addRecord);
   const editRecord = useAppStore((state) => state.editRecord);
 
   useDidUpdate(() => {
     setSelectedCategoryId(undefined);
+    store.setSourceAccId(undefined);
+    store.setTargetAccId(undefined);
   }, [tab]);
 
   return (
@@ -82,43 +95,87 @@ export const AddEditRecord = ({ editData }: IAddEditRecordProps) => {
           <CategorySelect type={RecordTypeEnum.EXPENSES} value={selectedCategoryId} onChange={setSelectedCategoryId} />
           <CategorySelect type={RecordTypeEnum.INCOME} value={selectedCategoryId} onChange={setSelectedCategoryId} />
           <Group style={{ height: '100%' }} p="md" align="center" justify="center">
-            <Stack className={classes['transfer-item']}>
-              <Flex className={classes.plus}>
-                <FaPlus />
-              </Flex>
-              <Text size="sm" c="dimmed">
-                Выберите счет
-              </Text>
-            </Stack>
+            {sourceAccId ? (
+              <Stack className={classes['transfer-item']} onClick={() => setIsAccountsSelectOpen('from')}>
+                <Flex className={classes.plus}>{getIconComponent(accountsById[sourceAccId].icon)}</Flex>
+                <Text size="sm" c="dimmed">
+                  {getAccountTitle(accountsById[sourceAccId].title, baseT)}
+                </Text>
+              </Stack>
+            ) : (
+              <Stack className={classes['transfer-item']} onClick={() => setIsAccountsSelectOpen('from')}>
+                <Flex className={classes.plus}>
+                  <FaPlus />
+                </Flex>
+                <Text size="sm" c="dimmed">
+                  Выберите счет
+                </Text>
+              </Stack>
+            )}
+
             <Box c="dimmed">
               <FaAngleRight />
             </Box>
-            <Stack className={classes['transfer-item']}>
-              <Flex className={classes.plus}>
-                <FaPlus />
-              </Flex>
-              <Text size="sm" c="dimmed">
-                Выберите счет
-              </Text>
-            </Stack>
+            {targetAccId ? (
+              <Stack className={classes['transfer-item']} onClick={() => setIsAccountsSelectOpen('from')}>
+                <Flex className={classes.plus}>{getIconComponent(accountsById[targetAccId].icon)}</Flex>
+                <Text size="sm" c="dimmed">
+                  {getAccountTitle(accountsById[targetAccId].title, baseT)}
+                </Text>
+              </Stack>
+            ) : (
+              <Stack className={classes['transfer-item']} onClick={() => setIsAccountsSelectOpen('to')}>
+                <Flex className={classes.plus}>
+                  <FaPlus />
+                </Flex>
+                <Text size="sm" c="dimmed">
+                  Выберите счет
+                </Text>
+              </Stack>
+            )}
           </Group>
         </SwipeableTabs>
       </div>
 
-      <PartialSlideUpOverlay id="acc-select"></PartialSlideUpOverlay>
+      <PartialSlideUpOverlay
+        id="acc-select"
+        open={!!isAccountsSelectOpen}
+        onClose={() => setIsAccountsSelectOpen()}
+        maxHeight={30}
+      >
+        {accounts.map((account) => {
+          const func = store[isAccountsSelectOpen === 'from' ? 'setSourceAccId' : 'setTargetAccId'];
+          const selected = isAccountsSelectOpen === 'from' ? sourceAccId : targetAccId;
 
-      {!!category && (
+          return (
+            <AccountItem
+              account={account}
+              key={account.id}
+              selected={selected === account.id}
+              onClick={(id) => {
+                func(id);
+                setIsAccountsSelectOpen();
+              }}
+            />
+          );
+        })}
+      </PartialSlideUpOverlay>
+
+      {(!!category || (sourceAccId && targetAccId)) && (
         <AddEditRecordCalculator
           category={category}
+          sourceAccId={sourceAccId}
+          targetAccId={targetAccId}
           editData={editData}
           onAccept={({ value, currency, accId, originalCurrency, originalValue, date }) => {
             const data = {
-              catId: selectedCategoryId!,
+              catId: selectedCategoryId,
               accId: accId!,
               value,
               currency,
               date,
-              type: category.type,
+              type: tab,
+              targetAccId,
               originalCurrency,
               originalValue,
             };

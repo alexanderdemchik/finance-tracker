@@ -12,10 +12,10 @@ import { FormTextInput } from '../../components/forms/FormTextInput';
 import { FormSelect } from '../../components/forms/FormSelect';
 import { FormNumberInput } from '../../components/forms/FormNumberInput';
 import { useDefaultCurrency } from '../../hooks/useDefaultCurrency';
-import { IAccount } from '../../store/types';
 import { AvailableIconsType, iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
 import classes from './AddAccount.module.css';
 import { useAccounts } from '../../hooks/useAccounts';
+import { IAccount } from '@/types/IAccount';
 
 const accountIcons: AvailableIconsType[] = ['moneyStack', 'wallet', 'piggyBank', 'bank'];
 

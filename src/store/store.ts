@@ -1,26 +1,20 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist, StateStorage } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import { deepMerge } from '@mantine/core';
-import { get, set, del } from 'idb-keyval'; // can use anything: IndexedDB, Ionic Storage, etc.
-import { ICategory, IStoreState } from './types';
-import { createLayoutSlice } from './slices/layoutSlice';
-import { createAccountSlice } from './slices/accountsSlice';
-import { createRecordsSlice } from './slices/recordsSlice';
+import { createLayoutSlice, ILayoutSlice } from './slices/layoutSlice';
+import { createAccountSlice, IAccountsSlice } from './slices/accountsSlice';
+import { createRecordsSlice, IRecordsSlice } from './slices/recordsSlice';
 import * as recordsDb from '../db/records';
-import { createSettingsSlice } from './slices/settingsSlice';
-import { createCategoriesSlice } from './slices/categoriesSlice';
+import { createSettingsSlice, ISettingsSlice } from './slices/settingsSlice';
+import { createCategoriesSlice, ICategoriesSlice } from './slices/categoriesSlice';
 import { defaultCategories } from '../constants/categories';
+import { ICategory } from '@/types/ICategory';
 
-// Custom storage object
-const storage: StateStorage = {
-  getItem: async (name: string): Promise<string | null> => (await get(name)) || null,
-  setItem: async (name: string, value: string): Promise<void> => {
-    await set(name, value);
-  },
-  removeItem: async (name: string): Promise<void> => {
-    await del(name);
-  },
-};
+export interface IStoreState extends IAccountsSlice, IRecordsSlice, ISettingsSlice, ICategoriesSlice {
+  layout: ILayoutSlice;
+  _hasHydrated: boolean;
+  setHasHydrated: (a: boolean) => void;
+}
 
 export const useAppStore = create<IStoreState>()(
   persist(
@@ -37,7 +31,7 @@ export const useAppStore = create<IStoreState>()(
     }),
     {
       name: 'storage',
-      storage: createJSONStorage(() => storage),
+      storage: createJSONStorage(() => localStorage),
       merge: (persistedState, currentState) => deepMerge(currentState, persistedState),
       partialize: (state) =>
         Object.fromEntries(

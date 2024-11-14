@@ -1,9 +1,11 @@
 import { PageLayout } from '@/layout/PageLayout';
 import { RecordsList } from './components/RecordsList/RecordsList';
 import { Header } from './components/Header/Header';
-import { useHomeStore } from '@/store/pages/home';
 import { useRecordsByMonth } from '@/hooks/useRecordsByMonth';
 import { useCalculateIncomeExpenses } from '@/hooks/useCalculateIncomeExpenses';
+import { createLocalStore } from '@/hooks/useLocalStore';
+
+const useHomeStore = createLocalStore({ selectedDate: new Date() });
 
 export function HomePage() {
   const { selectedDate, setSelectedDate } = useHomeStore();
@@ -12,14 +14,7 @@ export function HomePage() {
 
   return (
     <PageLayout
-      header={
-        <Header
-          date={selectedDate}
-          onDateChange={setSelectedDate}
-          income={income}
-          expenses={expenses}
-        />
-      }
+      header={<Header date={selectedDate} onDateChange={setSelectedDate} income={income} expenses={expenses} />}
       isPage
     >
       <RecordsList records={records} />

@@ -1,1 +1,1 @@
-module.exports = { ...require('eslint-config-mantine/.prettierrc.js'), printWidth: 120 };
+module.exports = { ...require('eslint-config-mantine/.prettierrc.js'), printWidth: 160 };

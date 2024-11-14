@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
 import { useAppStore } from '../store/store';
-import { IRecord } from '../store/types';
+import { IRecord } from '@/types/IRecord';
 
 export const useRecords = () => {
   const records = useAppStore((state) => state.records);
   const byId = useMemo(
-    () =>
-      records.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {} as Record<string, IRecord>),
+    () => records.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {} as Record<string, IRecord>),
     [records]
   );
 

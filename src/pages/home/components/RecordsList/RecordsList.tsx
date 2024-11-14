@@ -3,12 +3,11 @@ import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { IoNewspaper } from 'react-icons/io5';
 import classes from './RecordsList.module.css';
-import { IRecord } from '../../../../store/types';
 import { RecordItem } from './RecordItem';
-import { useCategories } from '../../../../hooks/useCategories';
 import { calculateRecordsIncomeExpenses } from '../../../../helpers/calculateRecordsIncomeExpenses';
 import { useDefaultCurrency } from '../../../../hooks/useDefaultCurrency';
 import { useCurrencyConverter } from '../../../../hooks/useCurrencyConverter';
+import { IRecord } from '@/types/IRecord';
 
 const DATE_FORMAT_TEMPLATE = 'DD.MM.YYYY';
 
@@ -17,7 +16,6 @@ interface IRecordsProps {
 }
 
 export const RecordsList = ({ records }: IRecordsProps) => {
-  const { byId: categoriesById } = useCategories();
   const defaultCurrency = useDefaultCurrency();
   const { convert } = useCurrencyConverter();
 
@@ -86,7 +84,7 @@ export const RecordsList = ({ records }: IRecordsProps) => {
           <Divider />
           {el.records.map((rec) => (
             <div key={rec.id}>
-              <RecordItem record={rec} category={categoriesById[rec.catId]} />
+              <RecordItem record={rec} />
               <Divider />
             </div>
           ))}

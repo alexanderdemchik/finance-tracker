@@ -1,5 +1,5 @@
+import { ICategory } from '@/types/ICategory';
 import { useAppStore } from '../store/store';
-import { ICategory } from '../store/types';
 
 export function useCategories() {
   const categories = useAppStore((state) => state.categories);
@@ -8,11 +8,8 @@ export function useCategories() {
   const addCategory = useAppStore((state) => state.addCategory);
 
   return {
-    raw: categories,
-    byId: categories.reduce<Record<string, ICategory>>(
-      (acc, curr) => ({ ...acc, [curr.id]: curr }),
-      {}
-    ),
+    categories,
+    categoriesById: categories.reduce<Record<string, ICategory>>((acc, curr) => ({ ...acc, [curr.id]: curr }), {}),
     setCategories,
     toggleCategoryVisibility,
     addCategory,

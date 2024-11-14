@@ -7,7 +7,7 @@ import {
 import { FaBackspace } from 'react-icons/fa';
 import { ReactElement } from 'react';
 import { Button, Group, SimpleGrid, Stack, Text } from '@mantine/core';
-import { CurrencyCodeEnum } from '@/constants/currencies';
+import { CurrencyCodeEnum } from "@/enums/CurrencyCodeEnum";
 import classes from './AddEditRecordCalculator.module.css';
 
 type ExtendedCalculatorCharactersType = SupportedCalculatorCharacterType | 'reset' | 'accept';

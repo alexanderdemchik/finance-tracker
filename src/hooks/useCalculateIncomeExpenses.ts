@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { IRecord } from '../store/types';
 import { calculateRecordsIncomeExpenses } from '../helpers/calculateRecordsIncomeExpenses';
 import { useDefaultCurrency } from './useDefaultCurrency';
 import { useCurrencyConverter } from './useCurrencyConverter';
+import { IRecord } from '@/types/IRecord';
 
 export function useCalculateIncomeExpenses(records: IRecord[]) {
   const defaultCurrency = useDefaultCurrency();

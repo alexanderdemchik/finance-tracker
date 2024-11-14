@@ -5,10 +5,10 @@ import { useToggle } from '@mantine/hooks';
 import { FaPlus } from 'react-icons/fa6';
 import { iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
 import classes from './CategorySelect.module.css';
-import { RecordTypeEnum } from '../../store/types';
 import { useCategories } from '../../hooks/useCategories';
 import { SlideUpOverlay } from '../../layout/SlideUpOverlay/SlideUpOverlay';
 import { CategorySettings } from '../CategorySettings/CategorySettings';
+import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
 
 interface ICategorySelectProps {
   type: RecordTypeEnum;
@@ -19,10 +19,7 @@ interface ICategorySelectProps {
 export function CategorySelect({ type, value, onChange }: ICategorySelectProps) {
   const [isCategorySettingsOpen, toggle] = useToggle();
   const categories = useCategories();
-  const categoriesToDisplay = useMemo(
-    () => categories.raw.filter((el) => el.type === type),
-    [type, categories]
-  );
+  const categoriesToDisplay = useMemo(() => categories.categories.filter((el) => el.type === type), [type, categories]);
 
   return (
     <SimpleGrid cols={4} p="md">

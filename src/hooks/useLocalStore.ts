@@ -1,11 +1,11 @@
-import { capitalize } from '@/helpers/strings';
 import { useRef } from 'react';
 import { create } from 'zustand';
+import { capitalize } from '@/helpers/strings';
 
 type AddMethods<T> = {
-  [K in keyof T as T[K] extends boolean
-    ? `toggle${Capitalize<string & K>}` | `set${Capitalize<string & K>}`
-    : `set${Capitalize<string & K>}`]: T[K] extends boolean ? (value?: T[K]) => void : (value: T[K]) => void;
+  [K in keyof T & string as T[K] extends boolean
+    ? `toggle${Capitalize<K>}` | `set${Capitalize<K>}`
+    : `set${Capitalize<K>}`]: T[K] extends boolean ? (value?: T[K]) => void : (value?: T[K] | undefined) => void;
 };
 
 export interface IBaseLocalStore {
@@ -14,10 +14,7 @@ export interface IBaseLocalStore {
 
 function addMethods<T extends IBaseLocalStore>(
   initialState: T,
-  set: (
-    partial: (T & AddMethods<T>) | (T & AddMethods<T>) | ((state: T & AddMethods<T>) => T & AddMethods<T>),
-    replace?: false
-  ) => void
+  set: (partial: (T & AddMethods<T>) | ((state: T & AddMethods<T>) => T & AddMethods<T>), replace?: false) => void
 ) {
   const keys = Object.keys(initialState);
 
@@ -44,7 +41,14 @@ function addMethods<T extends IBaseLocalStore>(
   }, {} as AddMethods<T>);
 }
 
-export function useLocalStore<T extends Object>(initialState: T) {
+export function createLocalStore<T extends IBaseLocalStore>(initialState: T) {
+  return create<T & AddMethods<T>>((set) => ({
+    ...initialState,
+    ...addMethods(initialState, set),
+  }));
+}
+
+export function useLocalStore<T extends IBaseLocalStore>(initialState: T) {
   const ref = useRef(
     create<T & AddMethods<T>>((set) => ({
       ...initialState,
@@ -54,6 +58,3 @@ export function useLocalStore<T extends Object>(initialState: T) {
 
   return ref.current;
 }
-
-type t = AddMethods<{ l?: string }>;
-  

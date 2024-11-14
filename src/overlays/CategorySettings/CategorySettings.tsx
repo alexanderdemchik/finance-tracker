@@ -1,6 +1,6 @@
-import { LayoutGroup, Reorder, useDragControls, motion } from 'framer-motion';
+import { Reorder, useDragControls } from 'framer-motion';
 import { Button, Flex, Group, SegmentedControl, Stack, Text } from '@mantine/core';
-import { memo, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { IoReorderTwo } from 'react-icons/io5';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
 import clsx from 'clsx';
@@ -9,12 +9,13 @@ import { useCategories } from '../../hooks/useCategories';
 import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
 import { PageLayout } from '../../layout/PageLayout';
 import { BackButton } from '../../components/BackButton/BackButton';
-import { ICategory, RecordTypeEnum } from '../../store/types';
 import classes from './CategorySettings.module.css';
-import { CategoryIcon } from '../../components/CategoryIcon/CategoryIcon';
+import { ColoredIcon } from '../../components/ColoredIcon/ColoredIcon';
 import { SwipeableTabs } from '../../components/SwipeableTabs/SwipeableTabs';
 import { SlideUpOverlay } from '../../layout/SlideUpOverlay/SlideUpOverlay';
 import { AddCategory } from './AddCategory';
+import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
+import { ICategory } from '@/types/ICategory';
 
 const tabs = [RecordTypeEnum.EXPENSES, RecordTypeEnum.INCOME];
 
@@ -59,7 +60,7 @@ export function CategorySettings() {
 }
 
 const CategorySettingsTab = memo(({ type }: { type: RecordTypeEnum }) => {
-  const { setCategories, raw: categories, toggleCategoryVisibility } = useCategories();
+  const { setCategories, categories, toggleCategoryVisibility } = useCategories();
 
   const [displayedCategories, hiddenCategories] = useMemo(
     () => [
@@ -134,7 +135,7 @@ const CategoryListItem = memo(
         >
           {item.hidden ? <FaPlus /> : <FaMinus />}
         </Flex>
-        <CategoryIcon icon={item.icon} color={item.color} />
+        <ColoredIcon icon={item.icon} color={item.color} />
         <Text size="sm" style={{ userSelect: 'none' }}>
           {item.title}
         </Text>
@@ -146,13 +147,7 @@ const CategoryListItem = memo(
     }
 
     return (
-      <Reorder.Item
-        key={item.id}
-        value={item}
-        id={item.id}
-        dragControls={dragControls}
-        dragListener={false}
-      >
+      <Reorder.Item key={item.id} value={item} id={item.id} dragControls={dragControls} dragListener={false}>
         {content}
         <Flex ref={(r) => setRef(r!)} style={{ cursor: 'grab', touchAction: 'none' }}>
           <IoReorderTwo />

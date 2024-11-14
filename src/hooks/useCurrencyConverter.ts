@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { CurrencyCodeEnum } from '../constants/currencies';
+import { CurrencyCodeEnum } from "@/enums/CurrencyCodeEnum";
 import { defaultConvertionRates as dfRate } from '../constants/defaultConversionRates';
 
 export type CurrencyConvertFn = (

@@ -1,9 +1,9 @@
 import { Group, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { iconsToComponentsMap } from '../../../../constants/iconsToComponentsMap';
-import { IAccount } from '../../../../store/types';
-import classes from './AccountItem.module.css';
 import { FaCheck } from 'react-icons/fa6';
+import { iconsToComponentsMap } from '../../../../constants/iconsToComponentsMap';
+import classes from './AccountItem.module.css';
+import { IAccount } from '@/types/IAccount';
 
 interface IAccountItemProps {
   account: IAccount;

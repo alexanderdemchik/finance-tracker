@@ -1,7 +1,8 @@
-import { CurrencyCodeEnum } from '../constants/currencies';
+import { CurrencyCodeEnum } from '@/enums/CurrencyCodeEnum';
 import { CurrencyConvertFn } from '../hooks/useCurrencyConverter';
-import { IRecord, RecordTypeEnum } from '../store/types';
 import { formatNumber } from './numbers';
+import { IRecord } from '@/types/IRecord';
+import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
 
 export function calculateRecordsIncomeExpenses(
   recs: IRecord[],

@@ -1,4 +1,5 @@
-import { ICategory, RecordTypeEnum } from '../store/types';
+import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
+import { ICategory } from '@/types/ICategory';
 
 export const defaultCategories: ICategory[] = [
   {

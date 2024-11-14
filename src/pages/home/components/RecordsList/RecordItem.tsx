@@ -1,25 +1,33 @@
 import { Button, Group, Stack, Text } from '@mantine/core';
-import { ICategory, IRecord, RecordTypeEnum } from '../../../../store/types';
-import classes from './RecordItem.module.css';
-import { signByCurrencyCode } from '../../../../constants/currencies';
-import { CategoryIcon } from '../../../../components/CategoryIcon/CategoryIcon';
-import { useMainCurrency } from '@/store/hooks/useMainCurrency';
-import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { motion, useAnimation } from 'framer-motion';
 import { FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
+import classes from './RecordItem.module.css';
+import { signByCurrencyCode } from '../../../../constants/currencies';
+import { ColoredIcon } from '../../../../components/ColoredIcon/ColoredIcon';
+import { useMainCurrency } from '@/hooks/useMainCurrency';
+import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { swipePower } from '@/helpers/animation';
 import { ConfirmationModal } from '@/components/ConfirmationModal/ConfirmationModal';
 import { useAppStore } from '@/store/store';
+import { useAccounts } from '@/hooks/useAccounts';
+import { getAccountTitle } from '@/helpers/account';
+import { useCategories } from '@/hooks/useCategories';
+import { IRecord } from '@/types/IRecord';
+import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
 
 interface Props {
   record: IRecord;
-  category: ICategory;
 }
 
-export const RecordItem = ({ record, category }: Props) => {
+export const RecordItem = ({ record }: Props) => {
+  const { t } = useTranslation();
   const mainCurrency = useMainCurrency();
   const { convert } = useCurrencyConverter();
+  const { accountsById } = useAccounts();
+  const { categoriesById } = useCategories();
+
   const toggleAddingRecord = useAppStore((state) => state.layout.toggleAddingRecord);
   const delRecord = useAppStore((state) => state.delRecord);
   const isCurrencyDiffersFromMain = (record.originalCurrency || record.currency) !== mainCurrency;
@@ -28,6 +36,9 @@ export const RecordItem = ({ record, category }: Props) => {
   const convertedCurrency = convert(record.value, record.currency, mainCurrency);
 
   const animation = useAnimation();
+  const targetAcc = accountsById[record.targetAccId || ''];
+  const category = categoriesById[record.catId || ''];
+  const isTranfer = !!record.targetAccId;
 
   return (
     <div style={{ overflow: 'hidden' }}>
@@ -52,17 +63,26 @@ export const RecordItem = ({ record, category }: Props) => {
       >
         <Group p="xs" align="center" gap="xs" justify="space-between" className={classes.wrapper}>
           <Group gap="xs">
-            <CategoryIcon icon={category.icon} color={category.color} />
-            <Text fw={500}>{category?.title}</Text>
+            {isTranfer ? (
+              <>
+                <ColoredIcon icon={targetAcc.icon} color={targetAcc.color} />
+                <Text fw={500}>{getAccountTitle(targetAcc?.title, t)}</Text>
+              </>
+            ) : (
+              <>
+                <ColoredIcon icon={category.icon} color={category.color} />
+                <Text fw={500}>{category?.title}</Text>
+              </>
+            )}
           </Group>
           <Group align="flex-end">
-            <Stack gap={'xxxs'}>
-              <Text lh={1} ta={'end'}>
+            <Stack gap="xxxs">
+              <Text lh={1} ta="end">
                 {prefix}
                 {convertedCurrency} {signByCurrencyCode[mainCurrency]}
               </Text>
               {isCurrencyDiffersFromMain && (
-                <Text size="xs" c="dimmed" lh={1} ta={'end'}>
+                <Text size="xs" c="dimmed" lh={1} ta="end">
                   {prefix}
                   {record.originalValue || record.value}{' '}
                   {signByCurrencyCode[record.originalCurrency || record.currency]}
