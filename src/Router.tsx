@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HomePage } from './pages/home/Home.page';
 import { RouterLayout } from './layout/RouterLayout/RouterLayout';
-import { ChartsPage } from './pages/Charts.page';
+import { ChartsPage } from './pages/charts/Charts.page';
 import { RoutesPathsEnum } from './constants/routes';
 import { AccountsPage } from './pages/accounts/Accounts.page';
 

@@ -10,43 +10,22 @@ import classes from './AddEditRecordCalculator.module.css';
 import { useAccounts } from '../../hooks/useAccounts';
 import { CurrencyCodeEnum } from '@/enums/CurrencyCodeEnum';
 import { PartialSlideUpOverlay } from '@/layout/SlideUpOverlay/PartialSlideUpOverlay';
-import { DefaultHeaderLayout } from '@/layout/DefaultHeaderLayout';
+import { PageHeaderLayout } from '@/layout/PageHeaderLayout/PageHeaderLayout';
 import { BackButton } from '@/components/BackButton/BackButton';
 import { CurrencySelect } from '@/components/CurrencySelect/CurrencySelect';
 import { getAccountTitle } from '@/helpers/account';
 import { getIconComponent } from '@/helpers/icons';
-import {
-  ARITHMETIC_CHARACTERS_REGEX,
-  SupportedCalculatorCharacterType,
-  useCalculatorController,
-} from './useCalculatorController';
+import { ARITHMETIC_CHARACTERS_REGEX, SupportedCalculatorCharacterType, useCalculatorController } from './useCalculatorController';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
-import { EditCurrencyValue } from './EditCurrencyValue';
+import { EditCurrencyValue } from '../../components/EditCurrencyValue/EditCurrencyValue';
 import { useLocalStore } from '@/hooks/useLocalStore';
-import { AccountItem } from '@/pages/accounts/components/AccountsList/AccountItem';
+import { AccountItem } from '@/components/AccountsList/AccountItem';
 import { IRecord } from '@/types/IRecord';
 import { ICategory } from '@/types/ICategory';
 
 type ExtendedCalculatorCharactersType = SupportedCalculatorCharacterType | 'date' | 'accept';
 
-const buttons: (ExtendedCalculatorCharactersType | number)[] = [
-  7,
-  8,
-  9,
-  'date',
-  4,
-  5,
-  6,
-  '+',
-  1,
-  2,
-  3,
-  '-',
-  '.',
-  0,
-  'back',
-  'accept',
-];
+const buttons: (ExtendedCalculatorCharactersType | number)[] = [7, 8, 9, 'date', 4, 5, 6, '+', 1, 2, 3, '-', '.', 0, 'back', 'accept'];
 
 const calculatorCharacterContentMap: Record<string, ReactElement | string> = {
   '+': <FaPlus />,
@@ -93,18 +72,12 @@ interface IAddRecordCalculatorProps {
   category: ICategory;
 }
 
-export const AddEditRecordCalculator = ({
-  onAccept,
-  category,
-  editData,
-  sourceAccId,
-  targetAccId,
-}: IAddRecordCalculatorProps) => {
+export const AddEditRecordCalculator = ({ onAccept, category, editData, sourceAccId, targetAccId }: IAddRecordCalculatorProps) => {
   const { t } = useTranslation();
 
   const isTransferMode = sourceAccId && targetAccId;
 
-  const { accounts, defaultAccount } = useAccounts();
+  const { displayedAccounts: accounts, defaultAccount } = useAccounts();
 
   const {
     selectedAccountId,
@@ -128,17 +101,15 @@ export const AddEditRecordCalculator = ({
     targetAccountId: undefined,
     isCurrencySelectOpen: false,
     isCurrencyEditOpen: false,
-    selectedCurrency: editData
-      ? editData.originalCurrency || editData.currency
-      : accounts.find((el) => el.id === defaultAccount?.id)?.currency,
+    selectedCurrency: editData ? editData.sourceCurrency || editData.currency : accounts.find((el) => el.id === defaultAccount?.id)?.currency,
     convertedCurrency: `${editData?.value || 0}`,
     isDatesModalOpen: false,
     selectedDate: editData ? new Date(editData.date) : new Date(),
     isAccountSelectOpen: false,
-  })();
+  });
 
   const { result, isContainsArithmeticOperation, isValid, handleInput, enteredNumber } = useCalculatorController(
-    `${editData?.originalValue || editData?.value || 0}`
+    `${editData?.sourceValue || editData?.value || 0}`
   );
 
   const { convert } = useCurrencyConverter();
@@ -171,7 +142,7 @@ export const AddEditRecordCalculator = ({
         onAccept({
           value,
           currency,
-          accId: sourceAccountId,
+          accId: isTransferMode ? targetAccId : sourceAccountId,
           originalValue: isCurrencyDiffersFromAccount ? enteredNumber : undefined,
           originalCurrency: isCurrencyDiffersFromAccount ? sourceCurrency : undefined,
           date: selectedDate.getTime(),
@@ -255,7 +226,7 @@ export const AddEditRecordCalculator = ({
 
   useEffect(() => {
     setConvertedCurrency(`${convert(enteredNumber || 0, sourceCurrency!, targetCurrency!)}`);
-  }, [isCurrencyDiffersFromAccount, enteredNumber, sourceCurrency, sourceAccount!.currency!]);
+  }, [isCurrencyDiffersFromAccount, enteredNumber, sourceCurrency, sourceAccount?.currency!]);
 
   return (
     <>
@@ -277,24 +248,12 @@ export const AddEditRecordCalculator = ({
         </Group>
 
         {!isTransferMode ? (
-          <Group
-            gap="xxs"
-            key={category.id}
-            className={clsx(classes.account)}
-            style={{ '--color': category?.color! }}
-            flex={1}
-          >
+          <Group gap="xxs" key={category.id} className={clsx(classes.account)} style={{ '--color': category?.color! }} flex={1}>
             {getIconComponent(category.icon)}
             <Text size="xs">{category.title}</Text>
           </Group>
         ) : (
-          <Group
-            gap="xxs"
-            key={targetAccount!.id}
-            className={clsx(classes.account)}
-            style={{ '--color': targetAccount!.color! }}
-            flex={1}
-          >
+          <Group gap="xxs" key={targetAccount!.id} className={clsx(classes.account)} style={{ '--color': targetAccount!.color! }} flex={1}>
             {getIconComponent(targetAccount!.icon)}
             <Text size="xs">{getAccountTitle(targetAccount?.title || '', t)}</Text>
           </Group>
@@ -319,27 +278,14 @@ export const AddEditRecordCalculator = ({
                 {targetCurrency}
               </Text>
 
-              <Text
-                fw={500}
-                size="sm"
-                className={classes['calc-field']}
-                lh={1}
-                style={{ borderRadius: 'var(--mantine-radius-default)' }}
-              >
+              <Text fw={500} size="sm" className={classes['calc-field']} lh={1} style={{ borderRadius: 'var(--mantine-radius-default)' }}>
                 {convertedCurrency}
               </Text>
             </Group>
           )}
 
           <Group align="center" gap="xxs" justify="flex-end">
-            <Text
-              fw={400}
-              component="span"
-              size="sm"
-              c="dimmed"
-              onClick={() => !isTransferMode && toggleIsCurrencySelectOpen()}
-              lh={1}
-            >
+            <Text fw={400} component="span" size="sm" c="dimmed" onClick={() => !isTransferMode && toggleIsCurrencySelectOpen()} lh={1}>
               {sourceCurrency || ''}
             </Text>
 
@@ -352,14 +298,7 @@ export const AddEditRecordCalculator = ({
         <SimpleGrid cols={4} spacing={4}>
           {buttons.map(renderCalculatorButton)}
         </SimpleGrid>
-        <Modal
-          opened={isDatesModalOpen}
-          onClose={toggleIsDatesModalOpen}
-          centered
-          size="auto"
-          zIndex="var(--mantine-z-index-overlay)"
-          withCloseButton={false}
-        >
+        <Modal opened={isDatesModalOpen} onClose={toggleIsDatesModalOpen} centered size="auto" zIndex="var(--mantine-z-index-modal)" withCloseButton={false}>
           <Calendar
             getDayProps={(date) => ({
               onClick: () => {
@@ -373,14 +312,8 @@ export const AddEditRecordCalculator = ({
         </Modal>
       </Stack>
 
-      <PartialSlideUpOverlay
-        open={isAccountSelectOpen}
-        id="account-select"
-        onClose={() => toggleIsAccountSelectOpen()}
-        height="auto"
-        maxHeight={40}
-      >
-        <DefaultHeaderLayout title="Выбор Счёта" left={<BackButton />} size="md" />
+      <PartialSlideUpOverlay open={isAccountSelectOpen} id="account-select" onClose={() => toggleIsAccountSelectOpen()} height="auto" maxHeight={40}>
+        <PageHeaderLayout title="Выбор Счёта" left={<BackButton />} size="md" />
         {accounts.map((account) => (
           <AccountItem
             account={account}
@@ -394,13 +327,8 @@ export const AddEditRecordCalculator = ({
         ))}
       </PartialSlideUpOverlay>
 
-      <PartialSlideUpOverlay
-        open={isCurrencySelectOpen}
-        id="currency-select"
-        onClose={() => toggleIsCurrencySelectOpen()}
-        height={90}
-      >
-        <DefaultHeaderLayout title="Валюта" left={<BackButton />} />
+      <PartialSlideUpOverlay open={isCurrencySelectOpen} id="currency-select" onClose={() => toggleIsCurrencySelectOpen()} height={90}>
+        <PageHeaderLayout title="Валюта" left={<BackButton />} />
         <CurrencySelect
           selected={sourceCurrency}
           onChange={(code) => {

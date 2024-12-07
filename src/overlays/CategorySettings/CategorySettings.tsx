@@ -6,12 +6,12 @@ import { FaMinus, FaPlus } from 'react-icons/fa6';
 import clsx from 'clsx';
 import { useToggle } from '@mantine/hooks';
 import { useCategories } from '../../hooks/useCategories';
-import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
-import { PageLayout } from '../../layout/PageLayout';
+import { PageHeaderLayout } from '../../layout/PageHeaderLayout/PageHeaderLayout';
+import { PageLayout } from '../../layout/PageLayout/PageLayout';
 import { BackButton } from '../../components/BackButton/BackButton';
 import classes from './CategorySettings.module.css';
 import { ColoredIcon } from '../../components/ColoredIcon/ColoredIcon';
-import { SwipeableTabs } from '../../components/SwipeableTabs/SwipeableTabs';
+import { SwipeableTabs } from '../../layout/SwipeableTabs/SwipeableTabs';
 import { SlideUpOverlay } from '../../layout/SlideUpOverlay/SlideUpOverlay';
 import { AddCategory } from './AddCategory';
 import { RecordTypeEnum } from '@/enums/RecordTypeEnum';
@@ -28,7 +28,7 @@ export function CategorySettings() {
   return (
     <PageLayout
       header={
-        <DefaultHeaderLayout left={<BackButton />} title="Категории">
+        <PageHeaderLayout left={<BackButton />} title="Категории">
           <SegmentedControl
             styles={{ root: { borderRadius: 0 } }}
             data={[
@@ -38,7 +38,7 @@ export function CategorySettings() {
             value={activeTab}
             onChange={(val) => toggleTab(val as RecordTypeEnum)}
           />
-        </DefaultHeaderLayout>
+        </PageHeaderLayout>
       }
     >
       <SwipeableTabs value={tabs.indexOf(activeTab)} onChange={onChangeTab}>

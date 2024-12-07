@@ -1,7 +1,7 @@
-import { Flex, Group, Stack, Title, TitleOrder } from '@mantine/core';
+import { Flex, Group, MantineSize, Stack, Title, TitleOrder } from '@mantine/core';
 import { ReactNode } from 'react';
 import clsx from 'clsx';
-import classes from './DefaultHeaderLayout.module.css';
+import classes from './PageHeaderLayout.module.css';
 
 interface IDefaultHeaderLayout {
   title: string | ReactNode;
@@ -9,13 +9,13 @@ interface IDefaultHeaderLayout {
   right?: ReactNode;
   children?: ReactNode;
   border?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: MantineSize;
 }
 
-export function DefaultHeaderLayout({
+export function PageHeaderLayout({
   title,
-  left = <svg />,
-  right = <svg />,
+  left = <svg height="1em" width="1em" />,
+  right = <svg height="1em" width="1em" />,
   children,
   border = true,
   size = 'lg',
@@ -25,11 +25,11 @@ export function DefaultHeaderLayout({
   return (
     <Stack gap={0} className={clsx(classes.wrapper, { [classes.border]: border })}>
       <Group p="xs" justify="space-between">
-        <Flex>{left}</Flex>
+        <Flex fz="lg">{left}</Flex>
         <Title order={sizeMap[size]} fw={500}>
           {title}
         </Title>
-        <Flex>{right}</Flex>
+        <Flex fz="lg">{right}</Flex>
       </Group>
       {children}
     </Stack>

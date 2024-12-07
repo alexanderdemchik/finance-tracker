@@ -1,6 +1,6 @@
-import { swipePower } from '@/helpers/animation';
 import { motion, PanInfo, useAnimation } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { swipePower } from '@/helpers/animation';
 
 interface ISwipeableTabs {
   children: React.ReactNode[];
@@ -49,7 +49,7 @@ export const SwipeableTabs = ({ children, value, onChange, disabled = false }: I
   ));
 
   return (
-    <div ref={constraintsRef} style={{ maxWidth: '100vw', height: '100%', overflowX: 'hidden' }}>
+    <div ref={constraintsRef} style={{ maxWidth: '100%', height: '100%', overflowX: 'hidden' }}>
       <motion.div
         style={{
           width: `calc(100vw * ${children.length})`,
@@ -71,7 +71,7 @@ export const SwipeableTabs = ({ children, value, onChange, disabled = false }: I
           <motion.div
             layoutScroll
             style={{
-              overflow: 'scroll',
+              overflow: 'auto',
               height: '100%',
               maxHeight: '100%',
               touchAction: 'pan-y',

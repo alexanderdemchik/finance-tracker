@@ -15,3 +15,7 @@
     width: 100%;
   }
 }
+
+.wrapper.selected {
+  border: 1px solid var(--color);
+}

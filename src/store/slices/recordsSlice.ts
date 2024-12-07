@@ -20,8 +20,10 @@ export const createRecordsSlice: StateCreator<IStoreState, [], [], IRecordsSlice
     if (!record.accId) return;
 
     if (record.type === RecordTypeEnum.TRANSFER) {
-      get().updateAccountBalance(record.accId, -record.value);
-      get().updateAccountBalance(record.targetAccId!, record.value);
+      get().updateAccountBalance(record.accId, +record.value);
+      get().updateAccountBalance(record.sourceAccId!, -record.sourceValue!);
+    } else if (record.type === RecordTypeEnum.CORRECTION) {
+      get().updateAccountBalance(record.accId, record.value);
     } else {
       get().updateAccountBalance(record.accId, record.type === RecordTypeEnum.INCOME ? record.value : -record.value);
     }
@@ -29,7 +31,15 @@ export const createRecordsSlice: StateCreator<IStoreState, [], [], IRecordsSlice
   delRecord: async (record: IRecord) => {
     await recordsDb.del(record.id);
     set((state) => ({ records: state.records.filter((el) => el.id !== record.id) }));
-    record.accId && get().updateAccountBalance(record.accId, -record.value);
+
+    if (!record.accId) return;
+
+    if (record.type === RecordTypeEnum.TRANSFER) {
+      get().updateAccountBalance(record.accId, -record.value);
+      get().updateAccountBalance(record.sourceAccId!, record.sourceValue!);
+    } else {
+      get().updateAccountBalance(record.accId, -record.value);
+    }
   },
   editRecord: async (record: IRecord) => {
     const recordBeforeUpdate = get().records.find((el) => el.id === record.id)!;
@@ -48,18 +58,15 @@ export const createRecordsSlice: StateCreator<IStoreState, [], [], IRecordsSlice
     // return accounts balance to before record state
     if (record.type === RecordTypeEnum.TRANSFER) {
       get().updateAccountBalance(recordBeforeUpdate.accId!, -record.value);
-      get().updateAccountBalance(recordBeforeUpdate.targetAccId!, record.value);
+      get().updateAccountBalance(recordBeforeUpdate.sourceAccId!, +record.sourceValue!);
     } else {
-      get().updateAccountBalance(
-        recordBeforeUpdate.accId!,
-        record.type === RecordTypeEnum.INCOME ? -record.value : +record.value
-      );
+      get().updateAccountBalance(recordBeforeUpdate.accId!, record.type === RecordTypeEnum.INCOME ? -record.value : +record.value);
     }
 
     // apply add logic TODO: DRY
     if (record.type === RecordTypeEnum.TRANSFER) {
-      get().updateAccountBalance(record.accId!, -record.value);
-      get().updateAccountBalance(record.targetAccId!, record.value);
+      get().updateAccountBalance(record.accId!, record.value);
+      get().updateAccountBalance(record.sourceAccId!, -record.sourceValue!);
     } else {
       get().updateAccountBalance(record.accId!, record.type === RecordTypeEnum.INCOME ? record.value : -record.value);
     }

@@ -3,7 +3,7 @@
   "charts": "Графики",
   "reports": "Счета",
   "settings": "Настройки",
-  "add-screen": {
+  "common": {
     "add": "Добавить",
     "expenses": "Расходы",
     "income": "Доходы",

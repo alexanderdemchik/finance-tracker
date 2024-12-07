@@ -1,11 +1,4 @@
-import {
-  TbBuildingCarousel,
-  TbGhost3,
-  TbPacman,
-  TbShoppingCart,
-  TbSwimming,
-  TbToolsKitchen2,
-} from 'react-icons/tb';
+import { TbBuildingCarousel, TbGhost3, TbNut, TbPacman, TbShoppingCart, TbSwimming, TbToolsKitchen2, TbTransfer } from 'react-icons/tb';
 
 import { LuGamepad2 } from 'react-icons/lu';
 import {
@@ -46,6 +39,8 @@ export const iconsToComponentsMap = {
   bank: FaBuildingColumns,
   wallet: FaWallet,
   piggyBank: FaPiggyBank,
+  tranfer: TbTransfer,
+  correction: TbNut,
 };
 
 export type AvailableIconsType = keyof typeof iconsToComponentsMap;

@@ -1,21 +1,3 @@
-.icon-wrapper {
-  border-radius: var(--mantine-radius-default);
-  padding: var(--mantine-spacing-xxs);
-  background: var(--mantine-color-body-light-heavy);
-  width: 35px;
-  height: 35px;
-
-  & svg {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.icon-wrapper.selected {
-  background-color: var(--mantine-primary-color-filled);
-  color: var(--mantine-primary-color-contrast);
-}
-
 .icons-wrapper {
   background-color: var(--mantine-color-body-light);
   border-radius: var(--mantine-radius-default);

@@ -1,0 +1,9 @@
+.calc-field {
+  display: flex;
+  align-items: center;
+  white-space: pre;
+
+  & > svg {
+    font-size: 0.8rem;
+  }
+}

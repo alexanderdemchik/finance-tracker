@@ -1,14 +1,14 @@
-import { Button, Group, Modal, Stack, Text, Title } from '@mantine/core';
+import { Button, Group, Modal, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
-import { FaCalendarAlt } from 'react-icons/fa';
-import { FaCaretDown, FaFilter } from 'react-icons/fa6';
+import { FaSearch } from 'react-icons/fa';
+import { FaCalendar, FaCaretDown } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { MonthPicker } from '@mantine/dates';
 import classes from './Header.module.css';
 import { useDefaultCurrency } from '../../../../hooks/useDefaultCurrency';
 import { signByCurrencyCode } from '../../../../constants/currencies';
-import { DefaultHeaderLayout } from '@/layout/DefaultHeaderLayout';
+import { PageHeaderLayout } from '@/layout/PageHeaderLayout/PageHeaderLayout';
 
 interface IHeaderProps {
   date: Date;
@@ -30,7 +30,7 @@ export function Header({ date, income, expenses, onDateChange }: IHeaderProps) {
 
   return (
     <>
-      <DefaultHeaderLayout right={<FaFilter />} title="Финансы" border={false} />
+      <PageHeaderLayout right={<FaCalendar />} left={<FaSearch />} title="Финансы" border={false} />
 
       <Group px="xs" pb="xxs" justify="space-between">
         <Stack gap={0} onClick={open}>

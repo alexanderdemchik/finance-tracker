@@ -5,7 +5,7 @@ export const ARITHMETIC_CHARACTERS_REGEX = /(?<=.)[*/+-]/gi;
 
 export type SupportedCalculatorCharacterType = '/' | '*' | '+' | '-' | '=' | '.' | 'back';
 
-export const extractNumberFromString = (numstr: string = '') => Number(numstr) || NaN;
+export const extractNumberFromString = (numstr: string = '') => Number(numstr) ?? NaN;
 export const numberToString = (num: number) => Number(num.toFixed(2)).toString();
 
 export function useCalculatorController(defaultValue = '0') {

@@ -1,21 +1,21 @@
-import { AspectRatio, Button, Flex, Grid, InputLabel, SimpleGrid, Stack } from '@mantine/core';
+import { Button, InputLabel, SimpleGrid, Stack } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import clsx from 'clsx';
 import { v4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
-import { PageLayout } from '../../layout/PageLayout';
+import { PageLayout } from '../../layout/PageLayout/PageLayout';
 import { currencies } from '../../constants/currencies';
-import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
+import { PageHeaderLayout } from '../../layout/PageHeaderLayout/PageHeaderLayout';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { FormTextInput } from '../../components/forms/FormTextInput';
 import { FormSelect } from '../../components/forms/FormSelect';
 import { FormNumberInput } from '../../components/forms/FormNumberInput';
 import { useDefaultCurrency } from '../../hooks/useDefaultCurrency';
-import { AvailableIconsType, iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
+import { AvailableIconsType } from '../../constants/iconsToComponentsMap';
 import classes from './AddAccount.module.css';
 import { useAccounts } from '../../hooks/useAccounts';
 import { IAccount } from '@/types/IAccount';
+import { ColoredIcon } from '@/components/ColoredIcon/ColoredIcon';
 
 const accountIcons: AvailableIconsType[] = ['moneyStack', 'wallet', 'piggyBank', 'bank'];
 
@@ -44,7 +44,7 @@ export function AddAccount() {
   });
 
   return (
-    <PageLayout header={<DefaultHeaderLayout title="Добавить счет" left={<BackButton />} />}>
+    <PageLayout header={<PageHeaderLayout title="Добавить счет" left={<BackButton />} />}>
       <FormProvider {...form}>
         <Stack p="xs" gap="xs">
           <FormTextInput
@@ -54,13 +54,7 @@ export function AddAccount() {
             required="Обязательное поле"
             error={form.formState.errors.title?.message}
           />
-          <FormSelect
-            name="currency"
-            data={sortedCurrencies}
-            searchable
-            comboboxProps={{ withinPortal: false }}
-            label="Валюта"
-          />
+          <FormSelect name="currency" data={sortedCurrencies} searchable comboboxProps={{ withinPortal: false }} label="Валюта" />
           <FormNumberInput label="Баланс" name="balance" />
 
           <Controller
@@ -70,27 +64,15 @@ export function AddAccount() {
               <Stack gap={0}>
                 <InputLabel>Иконка</InputLabel>
                 <SimpleGrid cols={5} p="xs" className={classes['icons-wrapper']}>
-                  {accountIcons.map((el) => {
-                    const Icon = iconsToComponentsMap[el];
-                    return (
-                      <AspectRatio>
-                        <Flex
-                          className={clsx(classes['icon-wrapper'], {
-                            [classes.selected]: field.value === el,
-                          })}
-                          onClick={() => field.onChange(el)}
-                        >
-                          <Icon />
-                        </Flex>
-                      </AspectRatio>
-                    );
-                  })}
+                  {accountIcons.map((el) => (
+                    <ColoredIcon icon={el} selected={field.value === el} onClick={() => field.onChange(el)} />
+                  ))}
                 </SimpleGrid>
               </Stack>
             )}
           />
         </Stack>
-        <Button className={classes['submit-btn']} onClick={handleSubmit}>
+        <Button className={classes['submit-btn']} onClick={handleSubmit} size="md">
           Сохранить
         </Button>
       </FormProvider>

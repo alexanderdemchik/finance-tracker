@@ -1,14 +1,14 @@
 import { FaCheck, FaDivide, FaEquals, FaMinus, FaPlus, FaStarOfLife } from 'react-icons/fa6';
+import { FaBackspace } from 'react-icons/fa';
+import { ReactElement } from 'react';
+import { Button, Group, SimpleGrid, Stack, Text } from '@mantine/core';
 import {
   ARITHMETIC_CHARACTERS_REGEX,
   SupportedCalculatorCharacterType,
   useCalculatorController,
-} from './useCalculatorController';
-import { FaBackspace } from 'react-icons/fa';
-import { ReactElement } from 'react';
-import { Button, Group, SimpleGrid, Stack, Text } from '@mantine/core';
-import { CurrencyCodeEnum } from "@/enums/CurrencyCodeEnum";
-import classes from './AddEditRecordCalculator.module.css';
+} from '../../overlays/AddEditRecord/useCalculatorController';
+import { CurrencyCodeEnum } from '@/enums/CurrencyCodeEnum';
+import classes from './EditCurrencyValue.module.css';
 
 type ExtendedCalculatorCharactersType = SupportedCalculatorCharacterType | 'reset' | 'accept';
 

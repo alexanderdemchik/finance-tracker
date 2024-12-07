@@ -9,4 +9,5 @@ export interface IAccount {
   icon: AvailableIconsType;
   color?: string;
   balance: number;
+  hidden?: boolean;
 }

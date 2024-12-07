@@ -1,0 +1,17 @@
+.root {
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.list {
+  display: flex; 
+  flex-direction: row-reverse; 
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.list > * {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}

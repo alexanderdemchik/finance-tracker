@@ -4,8 +4,8 @@ import { FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa6';
 import { useTranslation } from 'react-i18next';
 import classes from './RecordItem.module.css';
-import { signByCurrencyCode } from '../../../../constants/currencies';
-import { ColoredIcon } from '../../../../components/ColoredIcon/ColoredIcon';
+import { signByCurrencyCode } from '../../constants/currencies';
+import { ColoredIcon } from '../ColoredIcon/ColoredIcon';
 import { useMainCurrency } from '@/hooks/useMainCurrency';
 import { useCurrencyConverter } from '@/hooks/useCurrencyConverter';
 import { swipePower } from '@/helpers/animation';
@@ -30,15 +30,76 @@ export const RecordItem = ({ record }: Props) => {
 
   const toggleAddingRecord = useAppStore((state) => state.layout.toggleAddingRecord);
   const delRecord = useAppStore((state) => state.delRecord);
-  const isCurrencyDiffersFromMain = (record.originalCurrency || record.currency) !== mainCurrency;
+  const isCurrencyDiffersFromMain = (record.sourceCurrency || record.currency) !== mainCurrency;
 
-  const prefix = record.type === RecordTypeEnum.EXPENSES ? <>&#8722;</> : '+';
   const convertedCurrency = convert(record.value, record.currency, mainCurrency);
 
   const animation = useAnimation();
-  const targetAcc = accountsById[record.targetAccId || ''];
+  const sourceAcc = accountsById[record.sourceAccId || ''];
+  const targetAcc = accountsById[record.accId || ''];
   const category = categoriesById[record.catId || ''];
-  const isTranfer = !!record.targetAccId;
+  const isTranfer = record.type === RecordTypeEnum.TRANSFER;
+  const isCorrection = record.type === RecordTypeEnum.CORRECTION;
+
+  const renderLeftContent = () => {
+    if (isTranfer) {
+      return (
+        <>
+          <ColoredIcon icon="tranfer" />
+          <Text fw={500}>{`${getAccountTitle(sourceAcc?.title, t)} -> ${getAccountTitle(targetAcc?.title, t)}`}</Text>
+        </>
+      );
+    }
+
+    if (isCorrection) {
+      return (
+        <>
+          <ColoredIcon icon="correction" />
+          <Text fw={500}>Коррекция</Text>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <ColoredIcon icon={category.icon} color={category.color} />
+        <Text fw={500}>{category?.title}</Text>
+      </>
+    );
+  };
+
+  const renderRightContent = () => {
+    const sign = record.type === RecordTypeEnum.EXPENSES ? <>&#8722;</> : '+';
+
+    if (record.type === RecordTypeEnum.TRANSFER) {
+      return (
+        <Stack gap="xxxs">
+          <Text lh={1} ta="end">
+            {record.sourceValue || record.value} {signByCurrencyCode[record.sourceCurrency!]}
+          </Text>
+          <Text size="sm" lh={1} ta="end" c="dimmed">
+            {'-> '}
+            {record.value} {signByCurrencyCode[record.currency]}
+          </Text>
+        </Stack>
+      );
+    }
+
+    return (
+      <Stack gap="xxxs">
+        <Text lh={1} ta="end">
+          {sign}
+          {convertedCurrency} {signByCurrencyCode[mainCurrency]}
+        </Text>
+        {isCurrencyDiffersFromMain && (
+          <Text size="sm" c="dimmed" lh={1} ta="end">
+            {sign}
+            {record.sourceValue || record.value} {signByCurrencyCode[record.sourceCurrency || record.currency]}
+          </Text>
+        )}
+      </Stack>
+    );
+  };
 
   return (
     <div style={{ overflow: 'hidden' }}>
@@ -62,34 +123,8 @@ export const RecordItem = ({ record }: Props) => {
         }}
       >
         <Group p="xs" align="center" gap="xs" justify="space-between" className={classes.wrapper}>
-          <Group gap="xs">
-            {isTranfer ? (
-              <>
-                <ColoredIcon icon={targetAcc.icon} color={targetAcc.color} />
-                <Text fw={500}>{getAccountTitle(targetAcc?.title, t)}</Text>
-              </>
-            ) : (
-              <>
-                <ColoredIcon icon={category.icon} color={category.color} />
-                <Text fw={500}>{category?.title}</Text>
-              </>
-            )}
-          </Group>
-          <Group align="flex-end">
-            <Stack gap="xxxs">
-              <Text lh={1} ta="end">
-                {prefix}
-                {convertedCurrency} {signByCurrencyCode[mainCurrency]}
-              </Text>
-              {isCurrencyDiffersFromMain && (
-                <Text size="xs" c="dimmed" lh={1} ta="end">
-                  {prefix}
-                  {record.originalValue || record.value}{' '}
-                  {signByCurrencyCode[record.originalCurrency || record.currency]}
-                </Text>
-              )}
-            </Stack>
-          </Group>
+          <Group gap="xs">{renderLeftContent()}</Group>
+          <Group align="flex-end">{renderRightContent()}</Group>
         </Group>
         <motion.button
           className={classes['action-btn']}

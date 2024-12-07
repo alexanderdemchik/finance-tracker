@@ -5,11 +5,11 @@ export interface IRecord {
   id: string;
   catId?: string;
   accId?: string;
-  targetAccId?: string;
   value: number;
   currency: CurrencyCodeEnum;
-  originalValue?: number;
-  originalCurrency?: CurrencyCodeEnum;
+  sourceAccId?: string;
+  sourceValue?: number;
+  sourceCurrency?: CurrencyCodeEnum;
   date: number;
   type: RecordTypeEnum;
 }

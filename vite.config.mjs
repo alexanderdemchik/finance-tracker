@@ -11,6 +11,6 @@ export default defineConfig({
     setupFiles: './vitest.setup.mjs',
   },
   server: {
-    host: '192.168.100.11',
+    // host: '192.168.100.11',
   },
 });

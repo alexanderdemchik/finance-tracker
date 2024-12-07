@@ -3,8 +3,8 @@ import { Button, Flex, Group, SegmentedControl, SimpleGrid, Stack } from '@manti
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
-import { DefaultHeaderLayout } from '../../layout/DefaultHeaderLayout';
-import { PageLayout } from '../../layout/PageLayout';
+import { PageHeaderLayout } from '../../layout/PageHeaderLayout/PageHeaderLayout';
+import { PageLayout } from '../../layout/PageLayout/PageLayout';
 import { BackButton } from '../../components/BackButton/BackButton';
 import { FormTextInput } from '../../components/forms/FormTextInput';
 import { AvailableIconsType, iconsToComponentsMap } from '../../constants/iconsToComponentsMap';
@@ -32,7 +32,7 @@ export function AddCategory() {
   return (
     <PageLayout
       header={
-        <DefaultHeaderLayout title="Добавить категорию" left={<BackButton />}>
+        <PageHeaderLayout title="Добавить категорию" left={<BackButton />}>
           <Controller
             name="type"
             control={form.control}
@@ -48,7 +48,7 @@ export function AddCategory() {
               />
             )}
           />
-        </DefaultHeaderLayout>
+        </PageHeaderLayout>
       }
     >
       <FormProvider {...form}>

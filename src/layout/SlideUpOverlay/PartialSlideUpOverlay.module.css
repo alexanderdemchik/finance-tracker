@@ -6,7 +6,7 @@
   background: var(--mantine-color-body);
   transform: translateY(100vh);
   transition: transform .7s cubic-bezier(0.29, 1, 0.17, 1);
-  z-index: var(--mantine-z-index-overlay);
+  z-index: var(--mantine-z-index-modal);
   box-shadow: var(--mantine-shadow-md);
   overflow: hidden;
 }

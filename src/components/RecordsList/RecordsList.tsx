@@ -4,9 +4,9 @@ import dayjs from 'dayjs';
 import { IoNewspaper } from 'react-icons/io5';
 import classes from './RecordsList.module.css';
 import { RecordItem } from './RecordItem';
-import { calculateRecordsIncomeExpenses } from '../../../../helpers/calculateRecordsIncomeExpenses';
-import { useDefaultCurrency } from '../../../../hooks/useDefaultCurrency';
-import { useCurrencyConverter } from '../../../../hooks/useCurrencyConverter';
+import { calculateRecordsIncomeExpenses } from '../../helpers/calculateRecordsIncomeExpenses';
+import { useDefaultCurrency } from '../../hooks/useDefaultCurrency';
+import { useCurrencyConverter } from '../../hooks/useCurrencyConverter';
 import { IRecord } from '@/types/IRecord';
 
 const DATE_FORMAT_TEMPLATE = 'DD.MM.YYYY';
